@@ -1,6 +1,6 @@
-package com.restaurant.restaurant;
+package com.restaurant;
 
-import com.restaurant.restaurant.mapper.CommodityMapper;
+import com.restaurant.mapper.CommodityMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
