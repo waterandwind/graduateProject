@@ -38,9 +38,9 @@ server:
   port: 8088
 
 mybatis:
-  mapper-locations: classpath:mybatis/mapper/**/*.xml
+  mapper-locations: classpath:mapper/**/*.xml
 
 logging:
   level:
-    com.locker: debug   # 打印sql
+    com.restaurant: debug   # 打印sql
 
