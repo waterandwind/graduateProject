@@ -12,7 +12,7 @@ class RestaurantApplicationTests {
     CommodityMapper commodityMapper;
     @Test
     void contextLoads() {
-        System.out.println(commodityMapper.count());
+        System.out.println(commodityMapper.test());
     }
 
 }

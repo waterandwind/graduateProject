@@ -1,4 +1,7 @@
 package com.restaurant.service;
 
-public class CommodityService {
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.restaurant.entity.Commodity;
+
+public interface CommodityService {
 }
