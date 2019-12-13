@@ -4,10 +4,9 @@ spring:
     name: provider-receiveManagement
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-#    url: jdbc:mysql://127.0.0.1:3306/restaurant?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
-    url: jdbc:mysql://175.24.138.255:3306/restaurant?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://39.107.123.212:3306/restaurant?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     username: root
-    password: 654321
+    password: zxcvbnm123456789!@#$%^&*()_+
   redis:
     # Redis数据库索引（默认为0）
     database: 0
