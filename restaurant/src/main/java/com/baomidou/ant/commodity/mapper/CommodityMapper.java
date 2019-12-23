@@ -1,8 +1,7 @@
-package com.restaurant.mapper;
+package com.baomidou.ant.commodity.mapper;
 
 import com.baomidou.ant.commodity.entity.Commodity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -12,7 +11,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @author zyw
  * @since 2019-12-22
  */
-@Mapper
 public interface CommodityMapper extends BaseMapper<Commodity> {
 
 }
