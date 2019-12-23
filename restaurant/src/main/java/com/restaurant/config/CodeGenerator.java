@@ -23,19 +23,6 @@ public class CodeGenerator {
      * 读取控制台内容
      * </p>
      */
-    public static String scanner(String tip) {
-        Scanner scanner = new Scanner(System.in);
-        StringBuilder help = new StringBuilder();
-        help.append("请输入" + tip + "：");
-        System.out.println(help.toString());
-        if (scanner.hasNext()) {
-            String ipt = scanner.next();
-            if (StringUtils.isNotEmpty(ipt)) {
-                return ipt;
-            }
-        }
-        throw new MybatisPlusException("请输入正确的" + tip + "！");
-    }
 
     public static void main(String[] args) {
         // 代码生成器
@@ -68,7 +55,6 @@ public class CodeGenerator {
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setModuleName(scanner("模块名"));
         pc.setParent("com.baomidou.ant");
         mpg.setPackageInfo(pc);
 
@@ -130,7 +116,7 @@ public class CodeGenerator {
         strategy.setRestControllerStyle(true);
         // 公共父类
         // 写于父类中的公共字段
-        strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
+        strategy.setInclude();
         strategy.setControllerMappingHyphenStyle(true);
         strategy.setTablePrefix(pc.getModuleName() + "_");
         mpg.setStrategy(strategy);

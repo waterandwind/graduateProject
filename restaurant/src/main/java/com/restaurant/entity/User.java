@@ -10,7 +10,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -24,64 +23,43 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("commodity")
-public class Commodity extends Model<Commodity> {
+@TableName("user")
+public class User extends Model<User> {
 
     private static final long serialVersionUID=1L;
 
     /**
-     * 主键id
+     * 用户id
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
-     * 商品名字
+     * 用户名字
      */
-    @TableField("commodity_name")
-    private String commodityName;
+    @TableField("name")
+    private String name;
 
     /**
-     * 图片地址
+     * 电话号码
      */
-    @TableField("pic_url")
-    private String picUrl;
-
-    /**
-     * 备注说明
-     */
-    @TableField("remark")
-    private String remark;
+    @TableField("phone")
+    private String phone;
 
     @TableField("create_date")
     private LocalDateTime createDate;
 
-    @TableField("update_date")
-    private LocalDateTime updateDate;
+    /**
+     * 账号
+     */
+    @TableField("account_code")
+    private String accountCode;
 
     /**
-     * 创建人
+     * 密码
      */
-    @TableField("creator")
-    private String creator;
-
-    /**
-     * 创建人账号
-     */
-    @TableField("creator_account")
-    private String creatorAccount;
-
-    /**
-     * 原价
-     */
-    @TableField("original_cost")
-    private BigDecimal originalCost;
-
-    /**
-     * 售价
-     */
-    @TableField("sale_cost")
-    private BigDecimal saleCost;
+    @TableField("password")
+    private String password;
 
 
     @Override

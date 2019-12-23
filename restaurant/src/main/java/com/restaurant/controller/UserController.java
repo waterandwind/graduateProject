@@ -1,8 +1,7 @@
-package com.baomidou.ant.res.controller;
+package com.restaurant.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -14,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2019-12-23
  */
 @RestController
-@RequestMapping("/res/main-order")
-public class MainOrderController {
+@RequestMapping("/user")
+public class UserController {
 
 }
 

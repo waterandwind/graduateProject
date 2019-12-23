@@ -1,6 +1,6 @@
 package com.restaurant.mapper;
 
-import com.restaurant.entity.Commodity;
+import com.restaurant.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author zyw
  * @since 2019-12-23
  */
-public interface CommodityMapper extends BaseMapper<Commodity> {
+public interface UserMapper extends BaseMapper<User> {
 
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.restaurant.mapper.MainOrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.restaurant.entity.MainOrder">
+        <id column="id" property="id" />
+        <result column="create_date" property="createDate" />
+        <result column="total_price" property="totalPrice" />
+        <result column="creator" property="creator" />
+        <result column="creator_account" property="creatorAccount" />
+        <result column="order_code" property="orderCode" />
+        <result column="order_position" property="orderPosition" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, create_date, total_price, creator, creator_account, order_code, order_position
+    </sql>
+
+</mapper>

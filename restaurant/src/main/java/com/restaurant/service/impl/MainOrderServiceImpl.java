@@ -1,8 +1,8 @@
-package com.baomidou.ant.res.service.impl;
+package com.restaurant.service.impl;
 
-import com.baomidou.ant.res.entity.MainOrder;
-import com.baomidou.ant.res.mapper.MainOrderMapper;
-import com.baomidou.ant.res.service.IMainOrderService;
+import com.restaurant.entity.MainOrder;
+import com.restaurant.mapper.MainOrderMapper;
+import com.restaurant.service.IMainOrderService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 

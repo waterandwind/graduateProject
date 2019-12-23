@@ -1,6 +1,6 @@
-package com.baomidou.ant.res.mapper;
+package com.restaurant.mapper;
 
-import com.baomidou.ant.res.entity.MainOrder;
+import com.restaurant.entity.MainOrder;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
