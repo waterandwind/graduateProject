@@ -52,6 +52,7 @@ public class CodeGenerator {
         gc.setFileOverride(true);
         gc.setBaseColumnList(true);
         gc.setActiveRecord(true);
+        gc.setIdType(IdType.AUTO); //主键策略
 
         // gc.setSwagger2(true); 实体属性 Swagger2 注解
         mpg.setGlobalConfig(gc);
@@ -129,7 +130,6 @@ public class CodeGenerator {
         strategy.setRestControllerStyle(true);
         // 公共父类
         // 写于父类中的公共字段
-        strategy.setSuperEntityColumns("id");
         strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
         strategy.setControllerMappingHyphenStyle(true);
         strategy.setTablePrefix(pc.getModuleName() + "_");

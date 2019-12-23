@@ -31,7 +31,7 @@ public class SwaggerConfig {
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("TianTong 说明")
+                .title("餐厅营业系统 说明")
                // .contact(new Contact("zyw","null","z@example.com"))
                 .version("0.1")
                 .termsOfServiceUrl("localhost:8848/")
