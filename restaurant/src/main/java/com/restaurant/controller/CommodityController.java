@@ -22,13 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/commodity")
 public class CommodityController {
     @Autowired
-    ICommodityService icommodeytService;
+    ICommodityService iCommodeytService;
 
 
     @PostMapping("saveCommodity")
     @ApiOperation(value = "保存商品")
     public boolean saveCommodity(@RequestBody(required=true) Commodity commodity)  throws Exception{
-        return   icommodeytService.save(commodity);
+        return  iCommodeytService.save(commodity);
     }
 }
 
