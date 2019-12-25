@@ -1,6 +1,7 @@
 package com.restaurant.controller;
 
 
+import com.restaurant.config.UuidUtils;
 import com.restaurant.entity.Commodity;
 import com.restaurant.entity.result.Response;
 import com.restaurant.service.ICommodityService;
@@ -32,6 +33,7 @@ import java.io.*;
 @RestController
 @RequestMapping("/commodity")
 public class CommodityController {
+    private static final String FILE_PATH=System.getProperty("user.dir")+ "/src/main/resources/profile/";
     @Autowired
     ICommodityService iCommodeytService;
 
@@ -49,22 +51,35 @@ public class CommodityController {
             return Response.bizError("上传失败，请选择文件");
         }
 
-        String fileName = file.getOriginalFilename();
-        String filePath =System.getProperty("user.dir")+ "/src/main/resources/profile/";
-        File dest = new File(filePath + fileName);
+        String fileName = UuidUtils.reName(file.getOriginalFilename());
+
+        File dest = new File(FILE_PATH );
+        if(!dest.exists()){
+            dest.mkdir();
+        }
         try {
+            dest = new File(FILE_PATH+fileName);
             file.transferTo(dest);
-            return Response.success("上传成功");
+            return Response.success("上传成功",fileName);
         } catch (IOException e) {
           return Response.bizError("未知异常");
         }
     }
-    @GetMapping(value = "/imgShow", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<Resource> imgShow() throws FileNotFoundException {
-        InputStream inputStream=new FileInputStream(new File("E:\\毕业设计\\毕业设计\\graduateProject\\restaurant\\src\\main\\resources\\profile\\微信图片_20171112112426.jpg"));
+    @GetMapping(value = "/imgShow/{fileName}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<Resource> imgShow(@PathVariable("fileName") String fileName) throws FileNotFoundException {
+        InputStream inputStream=new FileInputStream(new File(FILE_PATH+fileName));
         InputStreamResource inputStreamResource = new InputStreamResource(inputStream);
         HttpHeaders headers = new HttpHeaders();
         return new ResponseEntity<>(inputStreamResource,headers, HttpStatus.OK);
+    }
+    @PostMapping
+    public Response createCommodity(Commodity commodity) {
+         boolean rs = iCommodeytService.save(commodity);
+         if (rs){
+            return Response.success("保存成功");
+         }else {
+           return Response.bizError("保存失败");
+         }
     }
 
 }

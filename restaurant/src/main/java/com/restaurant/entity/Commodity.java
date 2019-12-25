@@ -78,11 +78,16 @@ public class Commodity extends Model<Commodity> {
     private BigDecimal originalCost;
 
     /**
+     * 类型
+     */
+    @TableField("type")
+    private String  saleCost;
+
+    /**
      * 售价
      */
     @TableField("sale_cost")
-    private BigDecimal saleCost;
-
+    private BigDecimal type;
 
     @Override
     protected Serializable pkVal() {
