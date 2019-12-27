@@ -25,6 +25,7 @@ public enum ResponseStatus {
      */
     NOT_FOUND(4);
 
+
     int code;
 
     ResponseStatus(int code) {

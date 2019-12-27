@@ -20,5 +20,7 @@
     <sql id="Base_Column_List">
         id, commodity_name, pic_url, remark, create_date, update_date, creator, creator_account, original_cost, sale_cost
     </sql>
-
+    <select id="getTypeList" resultType="java.lang.String">
+        select distinct type from commodity
+    </select>
 </mapper>

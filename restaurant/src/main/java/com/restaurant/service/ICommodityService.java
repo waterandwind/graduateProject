@@ -3,6 +3,8 @@ package com.restaurant.service;
 import com.restaurant.entity.Commodity;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICommodityService extends IService<Commodity> {
 
+    public List<String> selectTypeList();
 }

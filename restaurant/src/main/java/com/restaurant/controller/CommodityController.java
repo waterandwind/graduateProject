@@ -1,13 +1,19 @@
 package com.restaurant.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.restaurant.config.UuidUtils;
 import com.restaurant.entity.Commodity;
+import com.restaurant.entity.requset.CommodityPageDto;
 import com.restaurant.entity.result.Response;
 import com.restaurant.service.ICommodityService;
 import com.sun.deploy.net.URLEncoder;
 import io.swagger.annotations.ApiOperation;
 import org.apache.tomcat.jni.FileInfo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -20,7 +26,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.*;
+import java.util.List;
 
 /**
  * <p>
@@ -37,12 +45,6 @@ public class CommodityController {
     @Autowired
     ICommodityService iCommodeytService;
 
-
-    @PostMapping("saveCommodity")
-    @ApiOperation(value = "保存商品")
-    public boolean saveCommodity(@RequestBody(required=true) Commodity commodity)  throws Exception{
-        return  iCommodeytService.save(commodity);
-    }
 
     @PostMapping("/upload")
     @ResponseBody
@@ -73,7 +75,8 @@ public class CommodityController {
         return new ResponseEntity<>(inputStreamResource,headers, HttpStatus.OK);
     }
     @PostMapping
-    public Response createCommodity(Commodity commodity) {
+    @ApiOperation(value = "保存商品信息")
+    public Response createCommodity(@RequestBody Commodity commodity) {
          boolean rs = iCommodeytService.save(commodity);
          if (rs){
             return Response.success("保存成功");
@@ -82,5 +85,41 @@ public class CommodityController {
          }
     }
 
+    @PatchMapping
+    @ApiOperation(value = "修改商品信息")
+    public Response updateCommodity(Commodity commodity) {
+        boolean rs = iCommodeytService.updateById(commodity);
+        if (rs){
+            return Response.success("修改成功");
+        }else {
+            return Response.bizError("修改失败");
+        }
+    }
+    @DeleteMapping
+    @ApiOperation(value = "批量删除")
+    public Response deleteCommodity(List<Integer> commodityIdList) {
+        boolean rs = iCommodeytService.removeByIds(commodityIdList);
+        if (rs){
+            return Response.success("删除成功");
+        }else {
+            return Response.bizError("删除失败");
+        }
+    }
+
+
+    @GetMapping
+    @ApiOperation(value = "分页获取商品列表")
+    public Response getCommodityList(@Valid CommodityPageDto commodity) {
+        Commodity com=new Commodity();
+        BeanUtils.copyProperties(commodity,com);
+        QueryWrapper<Commodity> qw=new QueryWrapper<>(com);
+        IPage rs = iCommodeytService.page(new Page<Commodity>(commodity.getCurrent(),commodity.getPageSize()),qw);
+        return Response.success("查找完毕",rs);
+    }
+    @GetMapping("typeList")
+    @ApiOperation(value = "获取类型列表")
+    public Response getTypeList() {
+            return Response.success("查询完毕",iCommodeytService.selectTypeList());
+    }
 }
 

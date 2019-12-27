@@ -1,9 +1,6 @@
 package com.restaurant.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -52,11 +49,15 @@ public class Commodity extends Model<Commodity> {
      */
     @TableField("remark")
     private String remark;
-
-    @TableField("create_date")
+    /**
+     * 创建时间
+     */
+    @TableField(value = "create_date",fill = FieldFill.INSERT)
     private LocalDateTime createDate;
-
-    @TableField("update_date")
+    /**
+     * 更新时间
+     */
+    @TableField(value = "update_date",fill = FieldFill.UPDATE)
     private LocalDateTime updateDate;
 
     /**
@@ -81,13 +82,13 @@ public class Commodity extends Model<Commodity> {
      * 类型
      */
     @TableField("type")
-    private String  saleCost;
+    private String  type;
 
     /**
      * 售价
      */
     @TableField("sale_cost")
-    private BigDecimal type;
+    private BigDecimal saleCost;
 
     @Override
     protected Serializable pkVal() {
