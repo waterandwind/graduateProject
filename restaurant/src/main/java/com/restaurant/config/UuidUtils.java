@@ -9,10 +9,11 @@ public class UuidUtils {
     public static String reName(String fileName){
         for (int i = fileName.length();i>1;i--){
             if (fileName.charAt(i-1)=='.'){
-                fileName.substring(i-1,fileName.length());
+                fileName = fileName.substring(i-1,fileName.length());
                 fileName=uuidStr()+fileName;
             }
         }
+        System.out.println(fileName);
         return fileName;
     }
 

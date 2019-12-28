@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2019-12-23
  */
 @RestController
-@RequestMapping("/order-list")
+@RequestMapping("/order_list")
 public class OrderListController {
 
 }
