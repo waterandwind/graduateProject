@@ -1,14 +1,18 @@
 package com.restaurant;
 
-import com.restaurant.config.UuidUtils;
+import com.restaurant.config.Utils;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 @SpringBootTest
 class RestaurantApplicationTests {
-
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
     @Test
     public void contextLoads() {
-        System.out.println( UuidUtils.reName("dsfsdfds.jpg"));
+//        stringRedisTemplate.opsForValue().set("a","test");
+        System.out.println(stringRedisTemplate.opsForValue().getOperations().delete("a"));
     }
 }

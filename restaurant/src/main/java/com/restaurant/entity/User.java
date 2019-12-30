@@ -1,9 +1,6 @@
 package com.restaurant.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -46,7 +43,10 @@ public class User extends Model<User> {
     @TableField("phone")
     private String phone;
 
-    @TableField("create_date")
+    /**
+     * 创建时间
+     */
+    @TableField(value = "create_date",fill  = FieldFill.INSERT)
     private LocalDateTime createDate;
 
     /**
@@ -60,6 +60,13 @@ public class User extends Model<User> {
      */
     @TableField("password")
     private String password;
+
+
+    /**
+     * 账号类型：0 用户；1 后台账号
+     */
+    @TableField("type")
+    private Integer type;
 
 
     @Override

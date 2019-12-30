@@ -1,18 +1,15 @@
 package com.restaurant.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.restaurant.config.UuidUtils;
+import com.restaurant.config.Utils;
 import com.restaurant.entity.Commodity;
 import com.restaurant.entity.requset.CommodityPageDto;
 import com.restaurant.entity.result.Response;
 import com.restaurant.service.ICommodityService;
-import com.sun.deploy.net.URLEncoder;
 import io.swagger.annotations.ApiOperation;
-import org.apache.tomcat.jni.FileInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -24,8 +21,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.*;
 import java.util.List;
@@ -53,7 +48,7 @@ public class CommodityController {
             return Response.bizError("上传失败，请选择文件");
         }
 
-        String fileName = UuidUtils.reName(file.getOriginalFilename());
+        String fileName = Utils.reName(file.getOriginalFilename());
 
         File dest = new File(FILE_PATH );
         if(!dest.exists()){

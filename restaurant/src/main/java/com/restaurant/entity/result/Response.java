@@ -10,7 +10,7 @@ public class Response<T> implements Serializable {
 
     private T data;
 
-    //设置get方法，否则无法转换为jason
+    //设置get方法，否则无法转换为json
     public int getCode() {
         return code;
     }
