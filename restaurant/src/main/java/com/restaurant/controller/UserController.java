@@ -61,7 +61,7 @@ public class UserController {
     }
     @PostMapping("logout")
     @ApiOperation(value = "注销")
-    public Response logout(@RequestBody UserDto user) {
+    public Response logout( UserDto user) {
         String rs=redis.opsForValue().get(user.getToken());
         if (rs!=null){
             redis.opsForValue().getOperations().delete(user.getToken());
@@ -72,7 +72,7 @@ public class UserController {
     }
     @PostMapping("testToken")
     @ApiOperation(value = "测试token存活")
-    public Response testToken(@RequestBody UserDto user) {
+    public Response testToken( UserDto user) {
         String rs=redis.opsForValue().get(user.getToken());
         if (rs!=null){
             return Response.success("token存在",rs);
