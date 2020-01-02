@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author zyw
@@ -31,16 +31,17 @@ public class UserController {
 
     @Autowired
     private StringRedisTemplate redis;
+
     @PostMapping
     @ApiOperation(value = "新增账号")
     public Response createUser(@RequestBody User user) {
-        if (iUserService.hasExist(user.getAccountCode())){
+        if (iUserService.hasExist(user.getAccountCode())) {
             return Response.bizError("注册失败，账号已被注册");
         }
         boolean rs = iUserService.createUser(user);
-        if (rs){
+        if (rs) {
             return Response.success("新增成功");
-        }else {
+        } else {
             return Response.bizError("新增失败");
         }
     }
@@ -50,33 +51,35 @@ public class UserController {
     public Response login(@RequestBody User user) {
 
         UserDto rs = iUserService.login(user);
-        if (rs!=null){
-            String token= Utils.uuidStr();
-            redis.opsForValue().set(token,user.getAccountCode(),300, TimeUnit.SECONDS);
+        if (rs != null) {
+            String token = Utils.uuidStr();
+            redis.opsForValue().set(token, user.getAccountCode(), 300, TimeUnit.SECONDS);
             rs.setToken(token);
-            return Response.success("登录成功",rs);
-        }else {
+            return Response.success("登录成功", rs);
+        } else {
             return Response.bizError("账号或者密码错误");
         }
     }
+
     @PostMapping("logout")
     @ApiOperation(value = "注销")
-    public Response logout( UserDto user) {
-        String rs=redis.opsForValue().get(user.getToken());
-        if (rs!=null){
+    public Response logout(UserDto user) {
+        String rs = redis.opsForValue().get(user.getToken());
+        if (rs != null) {
             redis.opsForValue().getOperations().delete(user.getToken());
             return Response.success("退出完成");
-        }else {
+        } else {
             return Response.bizError("token失效");
         }
     }
+
     @PostMapping("testToken")
     @ApiOperation(value = "测试token存活")
-    public Response testToken( UserDto user) {
-        String rs=redis.opsForValue().get(user.getToken());
-        if (rs!=null){
-            return Response.success("token存在",rs);
-        }else {
+    public Response testToken(UserDto user) {
+        String rs = redis.opsForValue().get(user.getToken());
+        if (rs != null) {
+            return Response.success("token存在", rs);
+        } else {
             return Response.bizError("token失效，请重新登录");
         }
     }
@@ -84,10 +87,10 @@ public class UserController {
 
     @GetMapping("exist")
     @ApiOperation(value = "账号是否存在")
-    public Response hasExist( String accountCode) {
-        if (iUserService.hasExist(accountCode)){
+    public Response hasExist(String accountCode) {
+        if (iUserService.hasExist(accountCode)) {
             return Response.success("账号不存在");
-        }else {
+        } else {
             return Response.bizError("账号存在");
         }
     }

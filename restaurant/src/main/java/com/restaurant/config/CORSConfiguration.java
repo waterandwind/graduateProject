@@ -1,4 +1,5 @@
 package com.restaurant.config;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -19,12 +20,11 @@ import java.util.List;
  */
 
 @Configuration
-public class CORSConfiguration extends WebMvcConfigurationSupport
-{
+public class CORSConfiguration extends WebMvcConfigurationSupport {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedMethods("GET", "POST", "DELETE", "PUT","PATCH")
+                .allowedMethods("GET", "POST", "DELETE", "PUT", "PATCH")
                 .allowedOrigins("*")
                 .maxAge(3600)
                 .allowCredentials(true)
@@ -51,8 +51,10 @@ public class CORSConfiguration extends WebMvcConfigurationSupport
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
         configurer.favorPathExtension(false);
     }
+
     /**
      * 跨域配置后swagger2不能访问，增加如下配置
+     *
      * @param registry
      */
     @Override

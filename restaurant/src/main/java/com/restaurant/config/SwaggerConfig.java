@@ -27,12 +27,13 @@ public class SwaggerConfig {
 
     /**
      * 该套 API 说明，包含作者、简介、版本、host、服务URL
+     *
      * @return
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("餐厅营业系统 说明")
-               // .contact(new Contact("zyw","null","z@example.com"))
+                // .contact(new Contact("zyw","null","z@example.com"))
                 .version("0.1")
                 .termsOfServiceUrl("localhost:8848/")
                 .description("餐厅营业系统api")

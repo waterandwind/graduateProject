@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author zyw
@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 @TableName("user")
 public class User extends Model<User> {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * 用户id
@@ -46,7 +46,7 @@ public class User extends Model<User> {
     /**
      * 创建时间
      */
-    @TableField(value = "create_date",fill  = FieldFill.INSERT)
+    @TableField(value = "create_date", fill = FieldFill.INSERT)
     private LocalDateTime createDate;
 
     /**

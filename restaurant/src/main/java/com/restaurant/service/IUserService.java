@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author zyw
@@ -17,6 +17,7 @@ import java.util.List;
 public interface IUserService extends IService<User> {
     /**
      * 新增用户
+     *
      * @param user
      * @return
      */
@@ -24,6 +25,7 @@ public interface IUserService extends IService<User> {
 
     /**
      * 是否存在账号
+     *
      * @param account
      * @return
      */
@@ -31,6 +33,7 @@ public interface IUserService extends IService<User> {
 
     /**
      * 登录
+     *
      * @param user
      * @return
      */

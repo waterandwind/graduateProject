@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author zyw
@@ -25,6 +25,7 @@ import java.util.List;
 public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity> implements ICommodityService {
     @Autowired
     CommodityMapper commodityMapper;
+
     @Override
     public List<String> selectTypeList() {
         return commodityMapper.getTypeList();

@@ -10,6 +10,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 class RestaurantApplicationTests {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
     @Test
     public void contextLoads() {
 //        stringRedisTemplate.opsForValue().set("a","test");

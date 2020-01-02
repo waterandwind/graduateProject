@@ -4,13 +4,13 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.restaurant.entity.MainOrder">
-        <id column="id" property="id" />
-        <result column="create_date" property="createDate" />
-        <result column="total_price" property="totalPrice" />
-        <result column="creator" property="creator" />
-        <result column="creator_account" property="creatorAccount" />
-        <result column="order_code" property="orderCode" />
-        <result column="order_position" property="orderPosition" />
+        <id column="id" property="id"/>
+        <result column="create_date" property="createDate"/>
+        <result column="total_price" property="totalPrice"/>
+        <result column="creator" property="creator"/>
+        <result column="creator_account" property="creatorAccount"/>
+        <result column="order_code" property="orderCode"/>
+        <result column="order_position" property="orderPosition"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

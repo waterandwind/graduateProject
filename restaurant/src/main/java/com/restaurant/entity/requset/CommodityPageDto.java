@@ -7,5 +7,5 @@ public class CommodityPageDto extends Page {
     /**
      * 类型
      */
-    private String  type;
+    private String type;
 }

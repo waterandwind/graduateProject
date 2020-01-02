@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author zyw
@@ -34,13 +34,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public boolean hasExist(String account) {
-        User queryAccount=new User();
+        User queryAccount = new User();
         queryAccount.setAccountCode(account);
-        Wrapper<User>  selectUser=new QueryWrapper<>(queryAccount);
-        User rs=getOne(selectUser);
-        if (rs==null){
+        Wrapper<User> selectUser = new QueryWrapper<>(queryAccount);
+        User rs = getOne(selectUser);
+        if (rs == null) {
             return false;
-        }else {
+        } else {
             return true;
         }
 
@@ -49,10 +49,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public UserDto login(User user) {
         user.setPassword(Utils.getMD5(user.getPassword()));
-        Wrapper<User>  selectUser=new QueryWrapper<>(user);
-        User rs= userMapper.selectOne(selectUser);
-        UserDto rsDto=new UserDto();
-        BeanUtils.copyProperties(rs,rsDto);
+        Wrapper<User> selectUser = new QueryWrapper<>(user);
+        User rs = userMapper.selectOne(selectUser);
+        UserDto rsDto = new UserDto();
+        BeanUtils.copyProperties(rs, rsDto);
         return rsDto;
     }
 }

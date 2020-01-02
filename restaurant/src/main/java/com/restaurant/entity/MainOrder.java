@@ -1,9 +1,6 @@
 package com.restaurant.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,7 +12,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author zyw
@@ -27,7 +24,7 @@ import java.time.LocalDateTime;
 @TableName("main_order")
 public class MainOrder extends Model<MainOrder> {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * 订单id
@@ -38,7 +35,7 @@ public class MainOrder extends Model<MainOrder> {
     /**
      * 创建时间
      */
-    @TableField("create_date")
+    @TableField(value = "create_date", fill = FieldFill.INSERT)
     private LocalDateTime createDate;
 
     /**
@@ -71,6 +68,11 @@ public class MainOrder extends Model<MainOrder> {
     @TableField("order_position")
     private String orderPosition;
 
+    /**
+     * 支付状态：0 待支付；1 已支付
+     */
+    @TableField("pay_state")
+    private String payState;
 
     @Override
     protected Serializable pkVal() {

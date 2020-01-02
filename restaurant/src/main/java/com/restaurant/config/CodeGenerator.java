@@ -46,11 +46,13 @@ public class CodeGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://39.107.123.212:3306/restaurant?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=UTC&rewriteBatchedStatements=true");
+       // dsc.setUrl("jdbc:mysql://39.107.123.212:3306/restaurant?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=UTC&rewriteBatchedStatements=true");
+        dsc.setUrl("jdbc:mysql://172.16.97.142:3306/superset?charset=utf8");
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("zxcvbnm123456789!@#$%^&*()_+");
+        //dsc.setPassword("zxcvbnm123456789!@#$%^&*()_+");
+        dsc.setPassword("lesso2128");
         mpg.setDataSource(dsc);
 
         // 包配置
@@ -69,7 +71,7 @@ public class CodeGenerator {
         // 如果模板引擎是 freemarker
 //        String templatePath = "/templates/mapper.xml.ftl";
         // 如果模板引擎是 velocity
-         String templatePath = "/templates/mapper.xml.vm";
+        String templatePath = "/templates/mapper.xml.vm";
 
         // 自定义输出配置
         List<FileOutConfig> focList = new ArrayList<>();

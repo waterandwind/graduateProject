@@ -4,12 +4,12 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.restaurant.entity.OrderList">
-        <id column="id" property="id" />
-        <result column="commodity_id" property="commodityId" />
-        <result column="commodity_name" property="commodityName" />
-        <result column="quantity" property="quantity" />
-        <result column="unit_price" property="unitPrice" />
-        <result column="total_price" property="totalPrice" />
+        <id column="id" property="id"/>
+        <result column="commodity_id" property="commodityId"/>
+        <result column="commodity_name" property="commodityName"/>
+        <result column="quantity" property="quantity"/>
+        <result column="unit_price" property="unitPrice"/>
+        <result column="total_price" property="totalPrice"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

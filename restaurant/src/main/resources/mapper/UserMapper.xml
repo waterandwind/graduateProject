@@ -4,12 +4,12 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.restaurant.entity.User">
-        <id column="id" property="id" />
-        <result column="name" property="name" />
-        <result column="phone" property="phone" />
-        <result column="create_date" property="createDate" />
-        <result column="account_code" property="accountCode" />
-        <result column="password" property="password" />
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="phone" property="phone"/>
+        <result column="create_date" property="createDate"/>
+        <result column="account_code" property="accountCode"/>
+        <result column="password" property="password"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

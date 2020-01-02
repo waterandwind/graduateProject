@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author zyw
@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 @TableName("commodity")
 public class Commodity extends Model<Commodity> {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * 主键id
@@ -52,12 +52,12 @@ public class Commodity extends Model<Commodity> {
     /**
      * 创建时间
      */
-    @TableField(value = "create_date",fill = FieldFill.INSERT)
+    @TableField(value = "create_date", fill = FieldFill.INSERT)
     private LocalDateTime createDate;
     /**
      * 更新时间
      */
-    @TableField(value = "update_date",fill = FieldFill.UPDATE)
+    @TableField(value = "update_date", fill = FieldFill.UPDATE)
     private LocalDateTime updateDate;
 
     /**
@@ -82,7 +82,7 @@ public class Commodity extends Model<Commodity> {
      * 类型
      */
     @TableField("type")
-    private String  type;
+    private String type;
 
     /**
      * 售价

@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author zyw
@@ -26,7 +26,7 @@ import java.math.BigDecimal;
 @TableName("order_list")
 public class OrderList extends Model<OrderList> {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
