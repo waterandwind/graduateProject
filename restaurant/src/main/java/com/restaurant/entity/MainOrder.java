@@ -2,6 +2,7 @@ package com.restaurant.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -36,6 +37,7 @@ public class MainOrder extends Model<MainOrder> {
      * 创建时间
      */
     @TableField(value = "create_date", fill = FieldFill.INSERT)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private LocalDateTime createDate;
 
     /**
@@ -72,7 +74,7 @@ public class MainOrder extends Model<MainOrder> {
      * 支付状态：0 待支付；1 已支付
      */
     @TableField("pay_state")
-    private String payState;
+    private Integer payState;
 
     @Override
     protected Serializable pkVal() {

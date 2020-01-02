@@ -1,5 +1,7 @@
 package com.restaurant.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.restaurant.config.Utils;
 import com.restaurant.entity.Commodity;
 import com.restaurant.entity.MainOrder;
 import com.restaurant.entity.OrderList;
@@ -13,9 +15,12 @@ import com.restaurant.service.IOrderListService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -32,7 +37,8 @@ public class MainOrderServiceImpl extends ServiceImpl<MainOrderMapper, MainOrder
     CommodityMapper commodityMapper;
     @Autowired
     IOrderListService iOrderListService;
-
+    @Autowired
+    StringRedisTemplate redis;
     @Override
     public OrderDetail createOrder(OrderDetail list) {
         BigDecimal totalPrice = new BigDecimal(0);
@@ -42,12 +48,23 @@ public class MainOrderServiceImpl extends ServiceImpl<MainOrderMapper, MainOrder
             commodity.setUnitPrice(com.getSaleCost());
             commodity.setCommodityName(com.getCommodityName());
             commodity.setTotalPrice(com.getSaleCost().multiply(new BigDecimal(commodity.getQuantity())));
-            totalPrice.add(commodity.getTotalPrice());
+            totalPrice=totalPrice.add(commodity.getTotalPrice());
         }
         MainOrder order = new MainOrder();
         BeanUtils.copyProperties(list, order);
+        //生成订单编码
+        String  now=  LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE);
+        String orderNum = redis.opsForValue().increment("orderNum").toString();
+              orderNum="0000"+orderNum;
+              orderNum=orderNum.substring(orderNum.length()-5,orderNum.length());
+        order.setOrderCode(now+orderNum);
+        order.setTotalPrice(totalPrice);
         save(order);
         iOrderListService.saveBatch(list.getOrderList());
-        return null;
+        QueryWrapper<MainOrder> qw= new QueryWrapper<>(order);
+        OrderDetail rsOrder=new OrderDetail();
+        BeanUtils.copyProperties(order, rsOrder);
+        rsOrder.setOrderList(list.getOrderList());
+        return rsOrder;
     }
 }
