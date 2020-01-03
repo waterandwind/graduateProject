@@ -49,7 +49,9 @@ public class Response<T> implements Serializable {
     public static <T> Response bizError(String msg) {
         return builder().code(ResponseStatus.BIZ_ERROR).msg(msg).build();
     }
-
+    public static <T> Response accountOrPasswordError(String msg) {
+        return builder().code(ResponseStatus.ERROR).msg(msg).build();
+    }
     public static <T> Response notFound() {
         return builder().code(ResponseStatus.NOT_FOUND).build();
     }

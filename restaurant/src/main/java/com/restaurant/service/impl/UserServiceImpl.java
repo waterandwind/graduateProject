@@ -52,7 +52,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         Wrapper<User> selectUser = new QueryWrapper<>(user);
         User rs = userMapper.selectOne(selectUser);
         UserDto rsDto = new UserDto();
-        BeanUtils.copyProperties(rs, rsDto);
-        return rsDto;
+        if(rs!=null){
+            BeanUtils.copyProperties(rs, rsDto);
+            return rsDto;
+        }
+        return null;
     }
 }

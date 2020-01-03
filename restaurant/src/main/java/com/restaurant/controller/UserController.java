@@ -57,7 +57,7 @@ public class UserController {
             rs.setToken(token);
             return Response.success("登录成功", rs);
         } else {
-            return Response.bizError("账号或者密码错误");
+            return Response.accountOrPasswordError("账号或者密码错误");
         }
     }
 
