@@ -92,6 +92,11 @@ public class Commodity extends Model<Commodity> {
      */
     @TableField("sale_cost")
     private BigDecimal saleCost;
+    /**
+     * 商品编码
+     */
+    @TableField("commodity_code")
+    private String commodityCode;
 
     @Override
     protected Serializable pkVal() {

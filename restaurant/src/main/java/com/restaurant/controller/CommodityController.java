@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.restaurant.config.Utils;
 import com.restaurant.entity.Commodity;
+import com.restaurant.entity.requset.CommodityCreateDto;
 import com.restaurant.entity.requset.CommodityPageDto;
 import com.restaurant.entity.result.Response;
 import com.restaurant.service.ICommodityService;
@@ -73,8 +74,8 @@ public class CommodityController {
 
     @PostMapping
     @ApiOperation(value = "保存商品信息")
-    public Response createCommodity(@RequestBody Commodity commodity) {
-        boolean rs = iCommodeytService.save(commodity);
+    public Response createCommodity(@RequestBody CommodityCreateDto commodity) {
+        boolean rs = iCommodeytService.createCommodity(commodity);
         if (rs) {
             return Response.success("保存成功");
         } else {

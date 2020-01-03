@@ -2,6 +2,7 @@ package com.restaurant.service;
 
 import com.restaurant.entity.Commodity;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.restaurant.entity.requset.CommodityCreateDto;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ import java.util.List;
 public interface ICommodityService extends IService<Commodity> {
 
     public List<String> selectTypeList();
+
+    public boolean createCommodity(CommodityCreateDto commodityCreateDto);
 }

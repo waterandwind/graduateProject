@@ -41,6 +41,13 @@ public class MainOrderServiceImpl extends ServiceImpl<MainOrderMapper, MainOrder
     StringRedisTemplate redis;
     @Override
     public OrderDetail createOrder(OrderDetail list) {
+        //生成订单编码
+        String orderNum = redis.opsForValue().increment("orderNum").toString();
+        orderNum="0000"+orderNum;
+        orderNum=orderNum.substring(orderNum.length()-5,orderNum.length());
+        String  now=  LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE);
+        orderNum=now+orderNum;
+
         BigDecimal totalPrice = new BigDecimal(0);
         for (OrderList commodity : list.getOrderList()
         ) {
@@ -48,17 +55,15 @@ public class MainOrderServiceImpl extends ServiceImpl<MainOrderMapper, MainOrder
             commodity.setUnitPrice(com.getSaleCost());
             commodity.setCommodityName(com.getCommodityName());
             commodity.setTotalPrice(com.getSaleCost().multiply(new BigDecimal(commodity.getQuantity())));
+            commodity.setMainOrderCode(orderNum);
             totalPrice=totalPrice.add(commodity.getTotalPrice());
         }
         MainOrder order = new MainOrder();
         BeanUtils.copyProperties(list, order);
-        //生成订单编码
-        String  now=  LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE);
-        String orderNum = redis.opsForValue().increment("orderNum").toString();
-              orderNum="0000"+orderNum;
-              orderNum=orderNum.substring(orderNum.length()-5,orderNum.length());
-        order.setOrderCode(now+orderNum);
+
+        order.setOrderCode(orderNum);
         order.setTotalPrice(totalPrice);
+        order.setPayState(0);
         save(order);
         iOrderListService.saveBatch(list.getOrderList());
         QueryWrapper<MainOrder> qw= new QueryWrapper<>(order);

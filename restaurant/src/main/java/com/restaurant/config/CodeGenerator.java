@@ -46,13 +46,13 @@ public class CodeGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-       // dsc.setUrl("jdbc:mysql://39.107.123.212:3306/restaurant?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=UTC&rewriteBatchedStatements=true");
-        dsc.setUrl("jdbc:mysql://172.16.97.142:3306/superset?charset=utf8");
+        dsc.setUrl("jdbc:mysql://39.107.123.212:3306/restaurant?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=UTC&rewriteBatchedStatements=true");
+//        dsc.setUrl("jdbc:mysql://172.16.97.142:3306/superset?charset=utf8");
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
-        //dsc.setPassword("zxcvbnm123456789!@#$%^&*()_+");
-        dsc.setPassword("lesso2128");
+        dsc.setPassword("zxcvbnm123456789!@#$%^&*()_+");
+//        dsc.setPassword("lesso2128");
         mpg.setDataSource(dsc);
 
         // 包配置

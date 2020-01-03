@@ -16,8 +16,5 @@ class RestaurantApplicationTests {
 //        stringRedisTemplate.opsForValue().set("a","test");
         System.out.println(stringRedisTemplate.opsForValue().getOperations().delete("a"));
     }
-    @Test
-    public void testOrderNum() {
-        Utils.getOrderCode();
-    }
+
 }
