@@ -8,11 +8,14 @@ import com.restaurant.entity.result.Response;
 import com.restaurant.entity.result.ResponseStatus;
 import com.restaurant.entity.result.UserDto;
 import com.restaurant.service.IUserService;
+import com.sun.deploy.net.HttpResponse;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -75,8 +78,8 @@ public class UserController {
 
     @PostMapping("testToken")
     @ApiOperation(value = "测试token存活")
-    public Response testToken(UserDto user) {
-        String rs = redis.opsForValue().get(user.getToken());
+    public Response testToken(UserDto user, HttpServletRequest request) {
+        String rs = redis.opsForValue().get(request.getHeader("token"));
         if (rs != null) {
             return Response.success("token存在", rs);
         } else {

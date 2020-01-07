@@ -87,6 +87,13 @@ public class Commodity extends Model<Commodity> {
     @TableField("type")
     private String type;
 
+
+    /**
+     * 上架状态；0 下架；1 上架；
+     */
+    @TableField("state")
+    private Integer state;
+
     /**
      * 售价
      */
