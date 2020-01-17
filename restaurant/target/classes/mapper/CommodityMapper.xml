@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.restaurant.mapper.CommodityMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.restaurant.entity.Commodity">
+        <id column="id" property="id"/>
+        <result column="commodity_name" property="commodityName"/>
+        <result column="pic_url" property="picUrl"/>
+        <result column="remark" property="remark"/>
+        <result column="create_date" property="createDate"/>
+        <result column="update_date" property="updateDate"/>
+        <result column="creator" property="creator"/>
+        <result column="creator_account" property="creatorAccount"/>
+        <result column="original_cost" property="originalCost"/>
+        <result column="sale_cost" property="saleCost"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, commodity_name, pic_url, remark, create_date, update_date, creator, creator_account, original_cost,
+        sale_cost
+    </sql>
+    <select id="getTypeList" resultType="java.lang.String">
+        select distinct type from commodity
+    </select>
+</mapper>
