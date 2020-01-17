@@ -37,40 +37,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/commodity")
 public class CommodityController {
-    private static final String FILE_PATH = System.getProperty("user.dir") + "/src/main/resources/profile/";
     @Autowired
     ICommodityService iCommodeytService;
 
-
-    @PostMapping("/upload")
-    @ResponseBody
-    public Response upload(@RequestParam("file") MultipartFile file) {
-        if (file.isEmpty()) {
-            return Response.bizError("上传失败，请选择文件");
-        }
-
-        String fileName = Utils.reName(file.getOriginalFilename());
-
-        File dest = new File(FILE_PATH);
-        if (!dest.exists()) {
-            dest.mkdir();
-        }
-        try {
-            dest = new File(FILE_PATH + fileName);
-            file.transferTo(dest);
-            return Response.success("上传成功", fileName);
-        } catch (IOException e) {
-            return Response.bizError("未知异常");
-        }
-    }
-
-    @GetMapping(value = "/imgShow/{fileName}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<Resource> imgShow(@PathVariable("fileName") String fileName) throws FileNotFoundException {
-        InputStream inputStream = new FileInputStream(new File(FILE_PATH + fileName));
-        InputStreamResource inputStreamResource = new InputStreamResource(inputStream);
-        HttpHeaders headers = new HttpHeaders();
-        return new ResponseEntity<>(inputStreamResource, headers, HttpStatus.OK);
-    }
 
     @PostMapping
     @ApiOperation(value = "保存商品信息")

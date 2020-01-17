@@ -44,11 +44,12 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity
         Commodity saveCommodity=new Commodity();
         BeanUtils.copyProperties(commodityCreateDto,saveCommodity);
         String commodityCode="COM"+redis.opsForValue().increment("commodityNum").toString();
+        //默认下架
+        saveCommodity.setState(0);
         saveCommodity.setCommodityCode(commodityCode);
         boolean saveCom=save(saveCommodity);
         for (Option option:
              commodityCreateDto.getOptions()) {
-            System.out.println(option.getOptionName());
            option.setCommodityCode(commodityCode);
         }
         boolean saveOption=iOptionService.saveBatch(commodityCreateDto.getOptions());

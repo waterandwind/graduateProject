@@ -56,7 +56,7 @@ public class UserController {
         UserDto rs = iUserService.login(user);
         if (rs != null) {
             String token = Utils.uuidStr();
-            redis.opsForValue().set(token, user.getAccountCode(), 300, TimeUnit.SECONDS);
+            redis.opsForValue().set(token, user.getAccountCode(), 30000, TimeUnit.SECONDS);
             rs.setToken(token);
             return Response.success("登录成功", rs);
         } else {

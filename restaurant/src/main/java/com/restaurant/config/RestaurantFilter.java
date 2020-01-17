@@ -53,8 +53,8 @@ public class RestaurantFilter implements Filter {
 
             /* 自己的代码 */
             url = request.getRequestURL().toString();
-//        log.error("请求---->>>>>>>>>"+url);
-            if (url.contains("login") || url.contains("swagger") || url.contains("ui") || url.contains("v2")) {
+        log.error("请求---->>>>>>>>>"+url);
+            if (url.contains("login") || url.contains("swagger") || url.contains("ui") || url.contains("v2")|| url.contains("upload")|| url.contains("imgShow")) {
                 filterChain.doFilter(servletRequest, servletResponse);
             } else {
                 String token = request.getHeader("token");
@@ -63,7 +63,7 @@ public class RestaurantFilter implements Filter {
                 if (token != null) {
                     String reAccount = redis.opsForValue().get(token);
                     if (reAccount != null && account.equals(reAccount)) {
-                        redis.opsForValue().set(token, account, 300, TimeUnit.SECONDS);
+                        redis.opsForValue().set(token, account, 30000, TimeUnit.SECONDS);
                         filterChain.doFilter(servletRequest, servletResponse);
                     } else {
                         response = (HttpServletResponse) servletResponse;

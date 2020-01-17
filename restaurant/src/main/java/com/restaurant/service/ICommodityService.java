@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface ICommodityService extends IService<Commodity> {
 
-    public List<String> selectTypeList();
+    List<String> selectTypeList();
 
-    public boolean createCommodity(CommodityCreateDto commodityCreateDto);
+    boolean createCommodity(CommodityCreateDto commodityCreateDto);
 }
