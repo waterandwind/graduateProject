@@ -54,8 +54,8 @@ public class CommodityController {
 
     @PatchMapping
     @ApiOperation(value = "修改商品信息")
-    public Response updateCommodity(Commodity commodity) {
-        boolean rs = iCommodeytService.updateById(commodity);
+    public Response updateCommodity(@RequestBody CommodityCreateDto commodity) {
+        boolean rs = iCommodeytService.updateCommodity(commodity);
         if (rs) {
             return Response.success("修改成功");
         } else {
@@ -75,7 +75,7 @@ public class CommodityController {
     }
 
 
-    @GetMapping
+    @GetMapping("/commodityList")
     @ApiOperation(value = "分页获取商品列表")
     public Response getCommodityList(@Valid CommodityPageDto commodity) {
         Commodity com = new Commodity();
@@ -84,7 +84,13 @@ public class CommodityController {
         IPage rs = iCommodeytService.page(new Page<Commodity>(commodity.getCurrent(), commodity.getPageSize()), qw);
         return Response.success("查找完毕", rs);
     }
+    @GetMapping
+    @ApiOperation(value = "获取单个商品信息及备注")
+    public Response getCommodity(@Valid Commodity commodity) {
 
+        CommodityCreateDto rs = iCommodeytService.getCommodity(commodity);
+        return Response.success("查找完毕", rs);
+    }
     @GetMapping("typeList")
     @ApiOperation(value = "获取类型列表")
     public Response getTypeList() {

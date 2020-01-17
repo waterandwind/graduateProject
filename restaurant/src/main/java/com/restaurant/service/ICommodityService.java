@@ -19,4 +19,8 @@ public interface ICommodityService extends IService<Commodity> {
     List<String> selectTypeList();
 
     boolean createCommodity(CommodityCreateDto commodityCreateDto);
+
+    boolean updateCommodity(CommodityCreateDto commodityCreateDto);
+
+    CommodityCreateDto getCommodity(Commodity commodity);
 }
