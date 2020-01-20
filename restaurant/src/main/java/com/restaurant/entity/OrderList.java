@@ -65,7 +65,6 @@ public class OrderList extends Model<OrderList> {
     @TableField("main_order_code")
     private String mainOrderCode;
 
-
     @Override
     protected Serializable pkVal() {
         return this.id;

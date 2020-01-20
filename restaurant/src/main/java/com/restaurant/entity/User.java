@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -66,6 +67,7 @@ public class User extends Model<User> {
      * 账号类型：0 用户；1 后台账号
      */
     @TableField("type")
+    @NotNull
     private Integer type;
 
 
