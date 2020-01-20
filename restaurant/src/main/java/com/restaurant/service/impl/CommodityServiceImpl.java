@@ -1,13 +1,10 @@
 package com.restaurant.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.restaurant.entity.Commodity;
-import com.restaurant.entity.MainOrder;
 import com.restaurant.entity.Option;
 import com.restaurant.entity.requset.CommodityCreateDto;
-import com.restaurant.entity.requset.CommodityPageDto;
+import com.restaurant.entity.result.ParamLackException;
 import com.restaurant.mapper.CommodityMapper;
 import com.restaurant.mapper.OptionMapper;
 import com.restaurant.service.ICommodityService;
@@ -15,11 +12,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.restaurant.service.IOptionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.convert.EntityWriter;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -30,6 +29,7 @@ import java.util.List;
  * @since 2019-12-23
  */
 @Service
+@Transactional(rollbackFor=Exception.class)
 public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity> implements ICommodityService {
     @Autowired
     CommodityMapper commodityMapper;
@@ -85,7 +85,24 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity
     }
 
     @Override
+    public boolean removeCommodity(List<String> commodityCode) throws Exception {
+        if (commodityCode.size()!=0){
+            Map<String, Object> map = new HashMap<>();
+            for (String code:commodityCode
+                 ) {
+                map.put("commodity_code",code);
+                removeByMap(map);
+                 iOptionService.removeByMap(map);
+            }
+            return true;
+        }else {
+            throw new ParamLackException("CommodityCode缺失");
+        }
+    }
+
+    @Override
     public CommodityCreateDto getCommodity(Commodity commodity) {
+
         CommodityCreateDto rs=new CommodityCreateDto();
         Commodity commodityRs=getById(commodity.getId());
         BeanUtils.copyProperties(commodityRs,rs);

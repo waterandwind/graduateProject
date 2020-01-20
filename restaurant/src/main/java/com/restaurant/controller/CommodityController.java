@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,10 +64,11 @@ public class CommodityController {
         }
     }
 
-    @DeleteMapping
+
+    @PostMapping("batchDelete")
     @ApiOperation(value = "批量删除")
-    public Response deleteCommodity(List<Integer> commodityIdList) {
-        boolean rs = iCommodeytService.removeByIds(commodityIdList);
+    public Response deleteCommodity(@RequestBody List<String> commodityCodeList) throws Exception {
+        boolean rs = iCommodeytService.removeCommodity(commodityCodeList);
         if (rs) {
             return Response.success("删除成功");
         } else {
