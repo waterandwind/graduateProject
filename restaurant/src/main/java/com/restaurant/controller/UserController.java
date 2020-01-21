@@ -8,7 +8,6 @@ import com.restaurant.entity.result.Response;
 import com.restaurant.entity.result.ResponseStatus;
 import com.restaurant.entity.result.UserDto;
 import com.restaurant.service.IUserService;
-import com.sun.deploy.net.HttpResponse;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
