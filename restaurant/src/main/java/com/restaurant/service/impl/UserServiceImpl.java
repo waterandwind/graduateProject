@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * <p>
  * 服务实现类
@@ -26,9 +29,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Autowired
     UserMapper userMapper;
 
+    @Autowired
+    StringRedisTemplate redis;
+
     @Override
     public boolean createUser(User user) {
         user.setPassword(Utils.getMD5(user.getPassword()));
+        user.setType(0);
         return save(user);
     }
 
@@ -47,12 +54,52 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
+    public List<User> addAccount(Integer num) {
+        List<User> userList=new ArrayList<>();
+        for (int i=0;i<num;i++){
+            User item= new User();
+            item.setName("未知用户");
+            String code=redis.opsForValue().increment("accountCode").toString();
+            //账号存在则让循环多执行一次，保证生成账号数量正确
+            if (hasExist(code)){
+                i--;
+                //跳出本次循环,
+                continue;
+            }else {
+                item.setAccountCode(code);
+            }
+            item.setAccountCode(code);
+            item.setType(1);
+            item.setPassword(Utils.getMD5("123456"));
+            userList.add(item);
+        }
+        boolean rs=saveBatch(userList);
+        if (rs){
+            return userList;
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean updateAccount(User user) {
+        //防止修改账号
+        user.setAccountCode(null);
+        //防止修改类型；
+        user.setType(null);
+        if (userMapper.updateById(user)>0){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public UserDto login(User user) {
         user.setPassword(Utils.getMD5(user.getPassword()));
         Wrapper<User> selectUser = new QueryWrapper<>(user);
         User rs = userMapper.selectOne(selectUser);
         UserDto rsDto = new UserDto();
-        if(rs!=null){
+        if(rs!=null&&rs.getType()==user.getType()){
             BeanUtils.copyProperties(rs, rsDto);
             return rsDto;
         }

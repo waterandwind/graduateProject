@@ -16,6 +16,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -50,7 +51,7 @@ public class UserController {
     }
 
     @PostMapping("login")
-    @ApiOperation(value = "登录")
+    @ApiOperation(value = "后台登录")
     public Response login(@RequestBody User user) {
 
         UserDto rs = iUserService.login(user);
@@ -86,7 +87,27 @@ public class UserController {
             return Response.bizError("token失效，请重新登录");
         }
     }
+    @PostMapping("addAccount")
+    @ApiOperation(value = "增加后台账号")
+    public Response addAccount(Integer num) {
+        List<User> rs =iUserService.addAccount(num);
+        if (rs != null&&rs.size()>0) {
+            return Response.success("创建完毕", rs);
+        } else  {
+            return Response.bizError("创建出错");
+        }
+    }
 
+    @PostMapping("updateAccount")
+    @ApiOperation(value = "增加后台账号")
+    public Response addAccount(User user) {
+        boolean rs =iUserService.updateAccount(user);
+        if (rs) {
+            return Response.success("修改完毕",user);
+        } else  {
+            return Response.bizError("修改错误");
+        }
+    }
 
     @GetMapping("exist")
     @ApiOperation(value = "账号是否存在")
@@ -96,6 +117,9 @@ public class UserController {
         } else {
             return Response.bizError("账号存在");
         }
+
     }
+
+
 }
 

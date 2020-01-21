@@ -32,6 +32,20 @@ public interface IUserService extends IService<User> {
     public boolean hasExist(String account);
 
     /**
+     * 增加后台账号
+     *
+     * @param num
+     * @return
+     */
+    public List<User> addAccount(Integer num);
+    /**
+     * 修改账号
+     *
+     * @param user
+     * @return
+     */
+    public boolean updateAccount(User user);
+    /**
      * 登录
      *
      * @param user
