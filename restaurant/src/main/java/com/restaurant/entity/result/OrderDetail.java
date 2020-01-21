@@ -1,10 +1,7 @@
 package com.restaurant.entity.result;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.restaurant.entity.OrderList;
+import com.restaurant.entity.requset.OrderListOptionDto;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -54,5 +51,5 @@ public class OrderDetail {
      */
     private String payState;
 
-    List<OrderList> orderList;
+    List<OrderListOptionDto> orderList;
 }

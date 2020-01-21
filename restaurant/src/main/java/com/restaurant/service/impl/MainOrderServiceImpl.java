@@ -2,13 +2,10 @@ package com.restaurant.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.restaurant.config.Utils;
-import com.restaurant.entity.Commodity;
-import com.restaurant.entity.MainOrder;
-import com.restaurant.entity.OrderList;
+import com.restaurant.entity.*;
+import com.restaurant.entity.requset.OrderListOptionDto;
 import com.restaurant.entity.result.OrderDetail;
-import com.restaurant.mapper.CommodityMapper;
-import com.restaurant.mapper.MainOrderMapper;
-import com.restaurant.mapper.OrderListMapper;
+import com.restaurant.mapper.*;
 import com.restaurant.service.IMainOrderService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.restaurant.service.IOrderListService;
@@ -17,10 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import sun.applet.Main;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,11 +32,19 @@ import java.util.List;
  * @since 2019-12-23
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class MainOrderServiceImpl extends ServiceImpl<MainOrderMapper, MainOrder> implements IMainOrderService {
     @Autowired
     CommodityMapper commodityMapper;
+
+    @Autowired
+    OrderOptionListMapper optionRecordMapper;
     @Autowired
     IOrderListService iOrderListService;
+    @Autowired
+    OrderListMapper orderListMapper;
+    @Autowired
+    OrderOptionListMapper orderOptionListMapper;
     @Autowired
     StringRedisTemplate redis;
     @Override
@@ -49,27 +57,80 @@ public class MainOrderServiceImpl extends ServiceImpl<MainOrderMapper, MainOrder
         orderNum=now+orderNum;
 
         BigDecimal totalPrice = new BigDecimal(0);
-        for (OrderList commodity : list.getOrderList()
+        for (OrderListOptionDto commodity : list.getOrderList()
         ) {
             Commodity com = commodityMapper.selectById(commodity.getCommodityId());
+            BigDecimal totalOpt = new BigDecimal(0);
+            for (Option opt:
+                 commodity.getOptionList()) {
+                totalOpt=totalOpt.add(opt.getPrice());
+            }
+
             commodity.setUnitPrice(com.getSaleCost());
             commodity.setCommodityName(com.getCommodityName());
-            commodity.setTotalPrice(com.getSaleCost().multiply(new BigDecimal(commodity.getQuantity())));
+            //（售价+备选总价）* 数量
+            commodity.setTotalPrice(com.getSaleCost().add(totalOpt).multiply(new BigDecimal(commodity.getQuantity())));
             commodity.setMainOrderCode(orderNum);
+            iOrderListService.save(commodity);
+            //添加列表备选记录
+            for (Option opt:
+                    commodity.getOptionList()) {
+                OrderOptionList optionRecord=new OrderOptionList();
+                optionRecord.setMainOrderCode(orderNum);
+                optionRecord.setOptionName(opt.getOptionName());
+                optionRecord.setOptionPrice(opt.getPrice());
+                optionRecord.setOrderListId(commodity.getId());
+                optionRecordMapper.insert(optionRecord);
+            }
             totalPrice=totalPrice.add(commodity.getTotalPrice());
         }
         MainOrder order = new MainOrder();
         BeanUtils.copyProperties(list, order);
-
         order.setOrderCode(orderNum);
         order.setTotalPrice(totalPrice);
         order.setPayState(0);
         save(order);
-        iOrderListService.saveBatch(list.getOrderList());
         QueryWrapper<MainOrder> qw= new QueryWrapper<>(order);
         OrderDetail rsOrder=new OrderDetail();
         BeanUtils.copyProperties(order, rsOrder);
         rsOrder.setOrderList(list.getOrderList());
         return rsOrder;
     }
+
+    @Override
+    public OrderDetail getOrderDetail(MainOrder order) {
+        OrderDetail detail=new OrderDetail();
+        QueryWrapper<MainOrder> qw= new QueryWrapper<>(order);
+        MainOrder mainOrder= getOne(qw);
+        //复制结果给detail
+        BeanUtils.copyProperties(mainOrder,detail);
+
+        List<OrderListOptionDto> orderList = new ArrayList<>();
+
+        OrderList orderList1=new OrderList();
+        orderList1.setMainOrderCode(mainOrder.getOrderCode());
+        QueryWrapper<OrderList> ol= new QueryWrapper<>(orderList1);
+        List<OrderList> rslist=orderListMapper.selectList(ol);
+        for (OrderList item:rslist
+             ) {
+            OrderListOptionDto olod=new OrderListOptionDto();
+            BeanUtils.copyProperties(item,olod);
+            List<Option> options=new ArrayList<>();
+            OrderOptionList orderOptionList=new OrderOptionList();
+            orderList1.setMainOrderCode(mainOrder.getOrderCode());
+            QueryWrapper<OrderOptionList> optionListQueryWrapper= new QueryWrapper<>(orderOptionList);
+            List<OrderOptionList>  orderOptionLists=orderOptionListMapper.selectList(optionListQueryWrapper);
+            for (OrderOptionList ite:orderOptionLists
+                 ) {
+                Option option=new Option();
+                BeanUtils.copyProperties(ite,option);
+                options.add(option);
+            }
+            orderList.add(olod);
+
+        }
+        detail.setOrderList(orderList);
+        return detail;
+    }
+
 }

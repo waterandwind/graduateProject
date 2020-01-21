@@ -23,4 +23,12 @@ public interface IMainOrderService extends IService<MainOrder> {
      * @return
      */
     public OrderDetail createOrder(OrderDetail list);
+
+    /**
+     * 订单详情
+     *
+     * @param order
+     * @return
+     */
+    public OrderDetail getOrderDetail(MainOrder order);
 }
