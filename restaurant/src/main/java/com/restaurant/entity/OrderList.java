@@ -39,6 +39,11 @@ public class OrderList extends Model<OrderList> {
 
     @TableField("commodity_name")
     private String commodityName;
+    /**
+     * 备注
+     */
+    @TableField("remark")
+    private String remark;
 
     /**
      * 数量

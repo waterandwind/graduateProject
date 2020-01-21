@@ -99,7 +99,7 @@ public class UserController {
     }
 
     @PostMapping("updateAccount")
-    @ApiOperation(value = "增加后台账号")
+    @ApiOperation(value = "修改后账号")
     public Response addAccount(User user) {
         boolean rs =iUserService.updateAccount(user);
         if (rs) {
