@@ -83,6 +83,9 @@ public class CommodityController {
         Commodity com = new Commodity();
         BeanUtils.copyProperties(commodity, com);
         QueryWrapper<Commodity> qw = new QueryWrapper<>(com);
+        if (commodity.getCommName()!=null){
+            qw.like("commodity_name",commodity.getCommName());
+        }
         IPage rs = iCommodeytService.page(new Page<Commodity>(commodity.getCurrent(), commodity.getPageSize()), qw);
         return Response.success("查找完毕", rs);
     }

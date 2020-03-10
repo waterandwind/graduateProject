@@ -45,7 +45,7 @@ public class FileController {
         }
     }
 
-    @GetMapping(value = "/imgShow/{fileName}", produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "/imgShow/{fileName:.+}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<Resource> imgShow(@PathVariable("fileName") String fileName) throws FileNotFoundException {
         InputStream inputStream = new FileInputStream(new File(FILE_PATH + fileName));
         InputStreamResource inputStreamResource = new InputStreamResource(inputStream);

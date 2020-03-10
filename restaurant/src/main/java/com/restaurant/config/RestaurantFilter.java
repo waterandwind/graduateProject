@@ -65,6 +65,7 @@
 //                    if (reAccount != null && account.equals(reAccount)) {
 //                        redis.opsForValue().set(token, account, 30000, TimeUnit.SECONDS);
 //                        filterChain.doFilter(servletRequest, servletResponse);
+//                        log.error("请求成功");
 //                    } else {
 //                        response = (HttpServletResponse) servletResponse;
 //                        response.setCharacterEncoding("UTF-8");
