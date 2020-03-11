@@ -87,6 +87,16 @@ public class RoleController {
             return Response.notFound("查询失败");
         }
     }
+    @GetMapping("accountRoleList")
+    @ApiOperation(value = "accountRoleList")
+    public Response accountRoleList(@Valid User user) {
+        AccountRole rs= iRoleService.getAccountRole(user);
+        if (rs!=null) {
+            return Response.success("查询成功",rs);
+        } else {
+            return Response.notFound("查询失败");
+        }
+    }
     @PostMapping("addRoleToAccount")
     @ApiOperation(value = "账号分配角色")
     public Response addRoleToAccount(@RequestBody UserRole userRole) {

@@ -1,9 +1,13 @@
 package com.restaurant.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.restaurant.config.Utils;
 import com.restaurant.entity.Commodity;
+import com.restaurant.entity.Right;
 import com.restaurant.entity.User;
+import com.restaurant.entity.requset.Page;
 import com.restaurant.entity.result.Response;
 import com.restaurant.entity.result.ResponseStatus;
 import com.restaurant.entity.result.UserDto;
@@ -15,6 +19,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -118,6 +123,20 @@ public class UserController {
         }
 
     }
+
+    @GetMapping("accountList")
+    @ApiOperation(value = "后台账号列表")
+    public Response rightList(@Valid Page page) {
+        QueryWrapper<User> qw=new QueryWrapper<>();
+        qw.eq("type",1);
+        IPage rs= iUserService.page(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<User>(page.getCurrent(),page.getPageSize()),qw);
+        if (rs!=null) {
+            return Response.success("查询成功",rs);
+        } else {
+            return Response.notFound("查询失败");
+        }
+    }
+
 
 
 }
