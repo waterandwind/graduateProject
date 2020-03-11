@@ -7,10 +7,16 @@ public class CommodityPageDto extends Page {
     /**
      * 类型
      */
-    private String type;
+    private String sType;
 
     /**
      * 商品名字
      */
     private String commName;
+
+
+    /**
+     * 状态
+     */
+    private Integer state;
 }

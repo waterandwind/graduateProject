@@ -67,20 +67,17 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity
     }
 
     @Override
-    public boolean updateCommodity(CommodityCreateDto commodityCreateDto) {
-        Commodity saveCommodity=new Commodity();
-        BeanUtils.copyProperties(commodityCreateDto,saveCommodity);
-        String commodityCode=saveCommodity.getCommodityCode();
-        boolean rs=updateById(saveCommodity);
-        Option option=new Option();
-        option.setCommodityCode(commodityCode);
-        QueryWrapper<Option> qw= new QueryWrapper<>(option);
-        iOptionService.remove(qw);
-        for (Option item:
-                commodityCreateDto.getOptions()) {
-            item.setCommodityCode(commodityCode);
-        }
-        iOptionService.saveBatch(commodityCreateDto.getOptions());
+    public boolean updateCommodity(Commodity commodity) {
+        boolean rs=updateById(commodity);
+//        Option option=new Option();
+//        option.setCommodityCode(commodityCode);
+//        QueryWrapper<Option> qw= new QueryWrapper<>(option);
+//        iOptionService.remove(qw);
+//        for (Option item:
+//                commodityCreateDto.getOptions()) {
+//            item.setCommodityCode(commodityCode);
+//        }
+
         return rs;
     }
 
@@ -92,9 +89,9 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity
                  ) {
                 map.put("commodity_code",code);
                 removeByMap(map);
-                 iOptionService.removeByMap(map);
+                 return iOptionService.removeByMap(map);
             }
-            return true;
+            return false;
         }else {
             throw new ParamLackException("CommodityCode缺失");
         }

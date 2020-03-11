@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.restaurant.config.Utils;
 import com.restaurant.entity.Commodity;
+import com.restaurant.entity.requset.BatchUpdateCommDto;
 import com.restaurant.entity.requset.CommodityCreateDto;
 import com.restaurant.entity.requset.CommodityPageDto;
 import com.restaurant.entity.result.Response;
@@ -53,9 +54,9 @@ public class CommodityController {
         }
     }
 
-    @PatchMapping
+    @PutMapping
     @ApiOperation(value = "修改商品信息")
-    public Response updateCommodity(@RequestBody CommodityCreateDto commodity) {
+    public Response updateCommodity(@RequestBody Commodity commodity) {
         boolean rs = iCommodeytService.updateCommodity(commodity);
         if (rs) {
             return Response.success("修改成功");
@@ -75,16 +76,37 @@ public class CommodityController {
             return Response.bizError("删除失败");
         }
     }
+    @PostMapping("batchUpComm")
+    @ApiOperation(value = "批量上架")
+    public Response batchUpComm(@RequestBody BatchUpdateCommDto dto) throws Exception {
+        List<Commodity> list=new ArrayList<>();
+        for (Integer id:
+        dto.getIdList()) {
+            Commodity commodity=new Commodity();
+            commodity.setState(dto.getFlag());
+            commodity.setId(id);
+            list.add(commodity);
+        }
+        boolean rs = iCommodeytService.saveOrUpdateBatch(list);
+        if (rs) {
+            return Response.success("操作成功");
+        } else {
+            return Response.bizError("操作失败");
+        }
+    }
 
 
     @GetMapping("/commodityList")
     @ApiOperation(value = "分页获取商品列表")
     public Response getCommodityList(@Valid CommodityPageDto commodity) {
         Commodity com = new Commodity();
-        BeanUtils.copyProperties(commodity, com);
+        com.setState(commodity.getState());
         QueryWrapper<Commodity> qw = new QueryWrapper<>(com);
         if (commodity.getCommName()!=null){
             qw.like("commodity_name",commodity.getCommName());
+        }
+        if (commodity.getSType()!=null){
+            qw.like("type",commodity.getSType());
         }
         IPage rs = iCommodeytService.page(new Page<Commodity>(commodity.getCurrent(), commodity.getPageSize()), qw);
         return Response.success("查找完毕", rs);
