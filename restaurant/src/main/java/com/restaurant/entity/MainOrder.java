@@ -71,10 +71,10 @@ public class MainOrder extends Model<MainOrder> {
     private String orderPosition;
 
     /**
-     * 支付状态：0 待支付；1 已支付
+     * 订单读取状态：0 未读；1 已读
      */
-    @TableField("pay_state")
-    private Integer payState;
+    @TableField("is_read")
+    private Integer isRead;
 
     @Override
     protected Serializable pkVal() {

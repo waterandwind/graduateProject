@@ -8,6 +8,7 @@ import com.restaurant.entity.result.UserDto;
 import com.restaurant.mapper.UserMapper;
 import com.restaurant.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -87,6 +88,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setAccountCode(null);
         //防止修改类型；
         user.setType(null);
+        if (user.getPassword()!= null||user.getPassword()!=""){
+           user.setPassword(Utils.getMD5(user.getPassword()));
+        }
+
         if (userMapper.updateById(user)>0){
             return true;
         }

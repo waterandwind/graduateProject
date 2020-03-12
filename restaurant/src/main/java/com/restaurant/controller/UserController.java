@@ -91,7 +91,7 @@ public class UserController {
             return Response.bizError("token失效，请重新登录");
         }
     }
-    @PostMapping("addAccount")
+    @GetMapping("addAccount")
     @ApiOperation(value = "增加后台账号")
     public Response addAccount(Integer num) {
         List<User> rs =iUserService.addAccount(num);

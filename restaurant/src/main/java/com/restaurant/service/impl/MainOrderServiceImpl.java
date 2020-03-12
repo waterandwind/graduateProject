@@ -21,7 +21,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -57,38 +59,25 @@ public class MainOrderServiceImpl extends ServiceImpl<MainOrderMapper, MainOrder
         orderNum=now+orderNum;
 
         BigDecimal totalPrice = new BigDecimal(0);
-        for (OrderListOptionDto commodity : list.getOrderList()
+        for (OrderList commodity : list.getOrderList()
         ) {
             Commodity com = commodityMapper.selectById(commodity.getCommodityId());
             BigDecimal totalOpt = new BigDecimal(0);
-            for (Option opt:
-                 commodity.getOptionList()) {
-                totalOpt=totalOpt.add(opt.getPrice());
-            }
 
             commodity.setUnitPrice(com.getSaleCost());
             commodity.setCommodityName(com.getCommodityName());
-            //（售价+备选总价）* 数量
+            //（售价）* 数量
             commodity.setTotalPrice(com.getSaleCost().add(totalOpt).multiply(new BigDecimal(commodity.getQuantity())));
             commodity.setMainOrderCode(orderNum);
             iOrderListService.save(commodity);
-            //添加列表备选记录
-            for (Option opt:
-                    commodity.getOptionList()) {
-                OrderOptionList optionRecord=new OrderOptionList();
-                optionRecord.setMainOrderCode(orderNum);
-                optionRecord.setOptionName(opt.getOptionName());
-                optionRecord.setOptionPrice(opt.getPrice());
-                optionRecord.setOrderListId(commodity.getId());
-                optionRecordMapper.insert(optionRecord);
-            }
+
             totalPrice=totalPrice.add(commodity.getTotalPrice());
         }
         MainOrder order = new MainOrder();
         BeanUtils.copyProperties(list, order);
         order.setOrderCode(orderNum);
         order.setTotalPrice(totalPrice);
-        order.setPayState(0);
+        order.setIsRead(1);
         save(order);
         QueryWrapper<MainOrder> qw= new QueryWrapper<>(order);
         OrderDetail rsOrder=new OrderDetail();
@@ -101,35 +90,38 @@ public class MainOrderServiceImpl extends ServiceImpl<MainOrderMapper, MainOrder
     public OrderDetail getOrderDetail(MainOrder order) {
         OrderDetail detail=new OrderDetail();
         QueryWrapper<MainOrder> qw= new QueryWrapper<>(order);
+        qw.eq("order_code",order.getOrderCode());
         MainOrder mainOrder= getOne(qw);
         //复制结果给detail
         BeanUtils.copyProperties(mainOrder,detail);
+        Map<String,Object> map=new HashMap<>();
+        map.put("main_order_code",order.getOrderCode());
+         detail.setOrderList(orderListMapper.selectByMap(map));
+//        List<OrderList> orderList = new ArrayList<>();
+//
+//        OrderList orderList1=new OrderList();
+//        orderList1.setMainOrderCode(mainOrder.getOrderCode());
+//        QueryWrapper<OrderList> ol= new QueryWrapper<>(orderList1);
+//        List<OrderList> rslist=orderListMapper.selectList(ol);
+//        for (OrderList item:rslist
+//             ) {
+//            OrderListOptionDto olod=new OrderListOptionDto();
+//            BeanUtils.copyProperties(item,olod);
+//            List<Option> options=new ArrayList<>();
+//            OrderOptionList orderOptionList=new OrderOptionList();
+//            orderList1.setMainOrderCode(mainOrder.getOrderCode());
+//            QueryWrapper<OrderOptionList> optionListQueryWrapper= new QueryWrapper<>(orderOptionList);
+////            List<OrderList>  orderOptionLists=orderOptionListMapper.selectList(optionListQueryWrapper);
+//            for (OrderOptionList ite:orderOptionLists
+//                 ) {
+//                Option option=new Option();
+//                BeanUtils.copyProperties(ite,option);
+//                options.add(option);
+//            }
+//            orderList.add(olod);
+//
 
-        List<OrderListOptionDto> orderList = new ArrayList<>();
-
-        OrderList orderList1=new OrderList();
-        orderList1.setMainOrderCode(mainOrder.getOrderCode());
-        QueryWrapper<OrderList> ol= new QueryWrapper<>(orderList1);
-        List<OrderList> rslist=orderListMapper.selectList(ol);
-        for (OrderList item:rslist
-             ) {
-            OrderListOptionDto olod=new OrderListOptionDto();
-            BeanUtils.copyProperties(item,olod);
-            List<Option> options=new ArrayList<>();
-            OrderOptionList orderOptionList=new OrderOptionList();
-            orderList1.setMainOrderCode(mainOrder.getOrderCode());
-            QueryWrapper<OrderOptionList> optionListQueryWrapper= new QueryWrapper<>(orderOptionList);
-            List<OrderOptionList>  orderOptionLists=orderOptionListMapper.selectList(optionListQueryWrapper);
-            for (OrderOptionList ite:orderOptionLists
-                 ) {
-                Option option=new Option();
-                BeanUtils.copyProperties(ite,option);
-                options.add(option);
-            }
-            orderList.add(olod);
-
-        }
-        detail.setOrderList(orderList);
+//        detail.setOrderList(orderList);
         return detail;
     }
 

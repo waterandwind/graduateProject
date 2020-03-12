@@ -1,6 +1,7 @@
 package com.restaurant.entity.result;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.restaurant.entity.OrderList;
 import com.restaurant.entity.requset.OrderListOptionDto;
 import lombok.Data;
 
@@ -47,9 +48,9 @@ public class OrderDetail {
     private String orderPosition;
 
     /**
-     * 支付状态：0 待支付；1 已支付
+     * 订单读取状态
      */
-    private String payState;
+    private Integer isRead;
 
-    List<OrderListOptionDto> orderList;
+    List<OrderList> orderList;
 }

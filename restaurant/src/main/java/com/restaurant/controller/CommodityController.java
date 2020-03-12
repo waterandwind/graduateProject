@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,7 +78,7 @@ public class CommodityController {
         }
     }
     @PostMapping("batchUpComm")
-    @ApiOperation(value = "批量上架")
+    @ApiOperation(value = "批量上/下架")
     public Response batchUpComm(@RequestBody BatchUpdateCommDto dto) throws Exception {
         List<Commodity> list=new ArrayList<>();
         for (Integer id:
@@ -123,5 +124,7 @@ public class CommodityController {
     public Response getTypeList() {
         return Response.success("查询完毕", iCommodeytService.selectTypeList());
     }
+
+
 }
 

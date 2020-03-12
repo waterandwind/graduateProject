@@ -33,6 +33,7 @@
  SELECT c.id,c.right_name,c.right_url FROM role a
  LEFT JOIN role_right b ON a.id=b.role_id
  LEFT JOIN right_table c ON b.right_id=c.id
+ where b.role_id = #{id}
     </select>
     <select id="getRoleList" parameterType="com.restaurant.entity.User" resultType="com.restaurant.entity.Role">
  SELECT role_name,c.status,c.id FROM user a
