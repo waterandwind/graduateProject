@@ -17,5 +17,7 @@
     <sql id="Base_Column_List">
         id, create_date, total_price, creator, creator_account, order_code, order_position
     </sql>
-
+    <select id="getSaleCount" parameterType="java.lang.String" resultType="com.restaurant.entity.SaleCountModel">
+  select IFNULL(sum(total_price),0) AS salePrice,#{date} AS date from main_order where DATE_FORMAT(create_date,'%Y-%m-%d')= #{date}
+    </select>
 </mapper>

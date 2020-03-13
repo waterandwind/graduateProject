@@ -48,6 +48,8 @@ public class MainOrderServiceImpl extends ServiceImpl<MainOrderMapper, MainOrder
     @Autowired
     OrderOptionListMapper orderOptionListMapper;
     @Autowired
+    MainOrderMapper mainOrderMapper;
+    @Autowired
     StringRedisTemplate redis;
     @Override
     public OrderDetail createOrder(OrderDetail list) {
@@ -59,7 +61,7 @@ public class MainOrderServiceImpl extends ServiceImpl<MainOrderMapper, MainOrder
         orderNum=now+orderNum;
 
         BigDecimal totalPrice = new BigDecimal(0);
-        for (OrderList commodity : list.getOrderList()
+        for (OrderList commodity : list.getCommoditys()
         ) {
             Commodity com = commodityMapper.selectById(commodity.getCommodityId());
             BigDecimal totalOpt = new BigDecimal(0);
@@ -82,7 +84,7 @@ public class MainOrderServiceImpl extends ServiceImpl<MainOrderMapper, MainOrder
         QueryWrapper<MainOrder> qw= new QueryWrapper<>(order);
         OrderDetail rsOrder=new OrderDetail();
         BeanUtils.copyProperties(order, rsOrder);
-        rsOrder.setOrderList(list.getOrderList());
+        rsOrder.setCommoditys(list.getCommoditys());
         return rsOrder;
     }
 
@@ -96,7 +98,7 @@ public class MainOrderServiceImpl extends ServiceImpl<MainOrderMapper, MainOrder
         BeanUtils.copyProperties(mainOrder,detail);
         Map<String,Object> map=new HashMap<>();
         map.put("main_order_code",order.getOrderCode());
-         detail.setOrderList(orderListMapper.selectByMap(map));
+         detail.setCommoditys(orderListMapper.selectByMap(map));
 //        List<OrderList> orderList = new ArrayList<>();
 //
 //        OrderList orderList1=new OrderList();
@@ -123,6 +125,17 @@ public class MainOrderServiceImpl extends ServiceImpl<MainOrderMapper, MainOrder
 
 //        detail.setOrderList(orderList);
         return detail;
+    }
+
+    @Override
+    public List<SaleCountModel> getSaleCount(LocalDateTime startDate, LocalDateTime endDate) {
+        List<SaleCountModel> list = new ArrayList<>();
+
+        while (startDate.isBefore(endDate)){
+           list.add( mainOrderMapper.getSaleCount(startDate.format(DateTimeFormatter.ISO_DATE)));
+           startDate=startDate.plusDays(1);
+        }
+        return list;
     }
 
 }

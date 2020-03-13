@@ -4,10 +4,8 @@ package com.restaurant.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.restaurant.entity.Commodity;
-import com.restaurant.entity.MainOrder;
-import com.restaurant.entity.OrderList;
-import com.restaurant.entity.OrderListPageDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.restaurant.entity.*;
 import com.restaurant.entity.result.OrderDetail;
 import com.restaurant.entity.result.Response;
 import com.restaurant.service.IMainOrderService;
@@ -16,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +61,16 @@ public class MainOrderController {
             return Response.bizError("状态修改成功");
         }
     }
-
+    @PostMapping("batchDelete")
+    @ApiOperation(value = "批量删除订单")
+    public Response batchDelete(@RequestBody List<Integer> idList) {
+        boolean rs = iMainOrderService.removeByIds(idList);
+        if (rs) {
+            return Response.success("删除完毕 ",rs);
+        } else {
+            return Response.bizError("删除出错");
+        }
+    }
     @GetMapping
     @ApiOperation(value = "查看订单详情")
     public Response createOrder( MainOrder mainOrder) {
@@ -91,12 +99,25 @@ public class MainOrderController {
     }
 
 
-//    @GetMapping("/saleCount")
-//    @ApiOperation(value = "销售额统计")
-//    public Response getSaleCount(LocalDateTime startTime, LocalDateTime endTime) {
-//
-//
-//        return Response.success("查找完毕", rs);
-//    }
+    @GetMapping("/saleCount")
+    @ApiOperation(value = "销售额统计")
+    public Response getSaleCount(String date) {
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime date1 = LocalDateTime.parse(date+"-01 00:00:00",df);
+//        LocalDateTime date=LocalDateTime.now();
+        LocalDateTime   endTime=date1.plusMonths(1);
+        List<SaleCountModel> rs= iMainOrderService.getSaleCount(date1,endTime);
+        return Response.success("查找完毕", rs);
+    }
+    @GetMapping("/saleCount")
+    @ApiOperation(value = "销售额统计")
+    public Response saleCount(String date) {
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime date1 = LocalDateTime.parse(date+" 00:00:00",df);
+//        LocalDateTime date=LocalDateTime.now();
+        LocalDateTime   endTime=date1.plusMonths(1);
+        List<SaleCountModel> rs= iMainOrderService.getSaleCount(date1,endTime);
+        return Response.success("查找完毕", rs);
+    }
 }
 

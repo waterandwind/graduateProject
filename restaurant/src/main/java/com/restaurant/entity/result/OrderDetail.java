@@ -5,12 +5,13 @@ import com.restaurant.entity.OrderList;
 import com.restaurant.entity.requset.OrderListOptionDto;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class OrderDetail {
+public class OrderDetail implements Serializable {
     /**
      * 订单id
      */
@@ -52,5 +53,7 @@ public class OrderDetail {
      */
     private Integer isRead;
 
-    List<OrderList> orderList;
+    private String remark;
+
+    List<OrderList> commoditys;
 }

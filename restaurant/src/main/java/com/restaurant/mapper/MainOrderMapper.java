@@ -2,6 +2,9 @@ package com.restaurant.mapper;
 
 import com.restaurant.entity.MainOrder;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.restaurant.entity.SaleCountModel;
+
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -12,5 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2019-12-23
  */
 public interface MainOrderMapper extends BaseMapper<MainOrder> {
-
+    SaleCountModel getSaleCount(String date);
 }

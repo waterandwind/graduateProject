@@ -71,6 +71,12 @@ public class MainOrder extends Model<MainOrder> {
     private String orderPosition;
 
     /**
+     * 订单备注
+     */
+    @TableField("remark")
+    private String remark;
+
+    /**
      * 订单读取状态：0 未读；1 已读
      */
     @TableField("is_read")
