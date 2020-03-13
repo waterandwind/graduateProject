@@ -130,10 +130,43 @@ public class MainOrderServiceImpl extends ServiceImpl<MainOrderMapper, MainOrder
     @Override
     public List<SaleCountModel> getSaleCount(LocalDateTime startDate, LocalDateTime endDate) {
         List<SaleCountModel> list = new ArrayList<>();
-
         while (startDate.isBefore(endDate)){
            list.add( mainOrderMapper.getSaleCount(startDate.format(DateTimeFormatter.ISO_DATE)));
            startDate=startDate.plusDays(1);
+        }
+        return list;
+    }
+
+    @Override
+    public List<CommoditySaleMode> getCommoditySaleMode(LocalDateTime startDate, LocalDateTime endDate) {
+        List<CommoditySaleMode> list=mainOrderMapper.getCommoditySaleMode(startDate.format(DateTimeFormatter.ISO_DATE),endDate.format(DateTimeFormatter.ISO_DATE));
+        if (list==null ||list.size()==0){
+            CommoditySaleMode tem=new CommoditySaleMode();
+            tem.setCommodityId(0);
+            tem.setCommodityName("开水白菜");
+            tem.setCommodityNum(0);
+            list.add(tem);
+        }
+        return list;
+    }
+
+    @Override
+    public List<TimeOrderCountDto> getTiemOrderCount(LocalDateTime date) {
+        DateTimeFormatter dateTimeFormatter =   DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        date=date.plusHours(6);
+        String dateStr=date.format(DateTimeFormatter.ISO_DATE);
+        List<TimeOrderCountDto> list = new ArrayList<>();
+
+        for (int i=0;i<=3;i++){
+
+            String time1=date.format(dateTimeFormatter);
+            String time2=date.plusHours(4).format(dateTimeFormatter);
+            TimeOrderCountDto tem=new TimeOrderCountDto();
+            tem.setTiemeArea(date.getHour()+"~"+date.plusHours(4).getHour());
+            tem.setOrderNum(mainOrderMapper.getTimeOrderCount(time1,time2));
+            list.add(tem);
+            date=date.plusHours(4);
         }
         return list;
     }

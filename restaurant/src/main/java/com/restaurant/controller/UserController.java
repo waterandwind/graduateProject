@@ -71,7 +71,7 @@ public class UserController {
 
     @PostMapping("logout")
     @ApiOperation(value = "注销")
-    public Response logout(UserDto user) {
+    public Response logout(@RequestBody UserDto user) {
         String rs = redis.opsForValue().get(user.getToken());
         if (rs != null) {
             redis.opsForValue().getOperations().delete(user.getToken());

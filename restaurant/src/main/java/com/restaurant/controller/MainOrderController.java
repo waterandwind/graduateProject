@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -109,14 +110,26 @@ public class MainOrderController {
         List<SaleCountModel> rs= iMainOrderService.getSaleCount(date1,endTime);
         return Response.success("查找完毕", rs);
     }
-    @GetMapping("/saleCount")
-    @ApiOperation(value = "销售额统计")
-    public Response saleCount(String date) {
+    @GetMapping("/commoditySaleCount")
+    @ApiOperation(value = "商品数统计")
+    public Response commoditySaleCount(String date) {
+
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime date1 = LocalDateTime.parse(date+"-01 00:00:00",df);
+//        LocalDateTime date=LocalDateTime.now();
+        LocalDateTime   endTime=date1.plusMonths(1);
+        List<CommoditySaleMode> rs= iMainOrderService.getCommoditySaleMode(date1,endTime);
+        return Response.success("查找完毕", rs);
+    }
+
+    @GetMapping("/timeOrderCount")
+    @ApiOperation(value = "时段统计")
+    public Response timeOrderCount(String date) {
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime date1 = LocalDateTime.parse(date+" 00:00:00",df);
 //        LocalDateTime date=LocalDateTime.now();
         LocalDateTime   endTime=date1.plusMonths(1);
-        List<SaleCountModel> rs= iMainOrderService.getSaleCount(date1,endTime);
+        List<TimeOrderCountDto> rs= iMainOrderService.getTiemOrderCount(date1);
         return Response.success("查找完毕", rs);
     }
 }

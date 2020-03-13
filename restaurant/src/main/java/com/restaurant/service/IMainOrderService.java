@@ -1,9 +1,7 @@
 package com.restaurant.service;
 
-import com.restaurant.entity.MainOrder;
+import com.restaurant.entity.*;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.restaurant.entity.OrderList;
-import com.restaurant.entity.SaleCountModel;
 import com.restaurant.entity.result.OrderDetail;
 
 import java.time.LocalDateTime;
@@ -41,4 +39,21 @@ public interface IMainOrderService extends IService<MainOrder> {
      * @return
      */
     public List<SaleCountModel> getSaleCount(LocalDateTime startDate,LocalDateTime endDate);
+
+    /**
+     * 商品销售数量统计
+     *
+     * @param startDate,endDate
+     * @return
+     */
+    public List<CommoditySaleMode> getCommoditySaleMode(LocalDateTime startDate, LocalDateTime endDate);
+
+
+    /**
+     * 时段订单统计
+     *
+     * @param date
+     * @return
+     */
+    public List<TimeOrderCountDto> getTiemOrderCount(LocalDateTime date);
 }
