@@ -72,7 +72,6 @@ public class MainOrderServiceImpl extends ServiceImpl<MainOrderMapper, MainOrder
             commodity.setTotalPrice(com.getSaleCost().add(totalOpt).multiply(new BigDecimal(commodity.getQuantity())));
             commodity.setMainOrderCode(orderNum);
             iOrderListService.save(commodity);
-
             totalPrice=totalPrice.add(commodity.getTotalPrice());
         }
         MainOrder order = new MainOrder();
@@ -99,31 +98,6 @@ public class MainOrderServiceImpl extends ServiceImpl<MainOrderMapper, MainOrder
         Map<String,Object> map=new HashMap<>();
         map.put("main_order_code",order.getOrderCode());
          detail.setCommoditys(orderListMapper.selectByMap(map));
-//        List<OrderList> orderList = new ArrayList<>();
-//
-//        OrderList orderList1=new OrderList();
-//        orderList1.setMainOrderCode(mainOrder.getOrderCode());
-//        QueryWrapper<OrderList> ol= new QueryWrapper<>(orderList1);
-//        List<OrderList> rslist=orderListMapper.selectList(ol);
-//        for (OrderList item:rslist
-//             ) {
-//            OrderListOptionDto olod=new OrderListOptionDto();
-//            BeanUtils.copyProperties(item,olod);
-//            List<Option> options=new ArrayList<>();
-//            OrderOptionList orderOptionList=new OrderOptionList();
-//            orderList1.setMainOrderCode(mainOrder.getOrderCode());
-//            QueryWrapper<OrderOptionList> optionListQueryWrapper= new QueryWrapper<>(orderOptionList);
-////            List<OrderList>  orderOptionLists=orderOptionListMapper.selectList(optionListQueryWrapper);
-//            for (OrderOptionList ite:orderOptionLists
-//                 ) {
-//                Option option=new Option();
-//                BeanUtils.copyProperties(ite,option);
-//                options.add(option);
-//            }
-//            orderList.add(olod);
-//
-
-//        detail.setOrderList(orderList);
         return detail;
     }
 

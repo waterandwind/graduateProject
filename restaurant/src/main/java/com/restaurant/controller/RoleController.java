@@ -143,9 +143,9 @@ public class RoleController {
     public Response roleStatusUpdate(@RequestBody Right right) {
         boolean rs = iRightService.updateById(right);
         if (rs) {
-            return Response.success("角色状态修改成功");
+            return Response.success("权限修改成功");
         } else {
-            return Response.bizError("角色状态修改失败");
+            return Response.bizError("权限修改失败");
         }
     }
 
