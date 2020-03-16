@@ -52,32 +52,13 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity
         //默认下架
         saveCommodity.setState(0);
         saveCommodity.setCommodityCode(commodityCode);
-        boolean saveCom=save(saveCommodity);
-        for (Option option:
-             commodityCreateDto.getOptions()) {
-           option.setCommodityCode(commodityCode);
-        }
-        boolean saveOption=iOptionService.saveBatch(commodityCreateDto.getOptions());
-        if (saveCom&&saveOption){
-            return true;
-        }else {
-            return false;
-        }
+        return save(saveCommodity);
 
     }
 
     @Override
     public boolean updateCommodity(Commodity commodity) {
         boolean rs=updateById(commodity);
-//        Option option=new Option();
-//        option.setCommodityCode(commodityCode);
-//        QueryWrapper<Option> qw= new QueryWrapper<>(option);
-//        iOptionService.remove(qw);
-//        for (Option item:
-//                commodityCreateDto.getOptions()) {
-//            item.setCommodityCode(commodityCode);
-//        }
-
         return rs;
     }
 
@@ -103,10 +84,6 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity
         CommodityCreateDto rs=new CommodityCreateDto();
         Commodity commodityRs=getById(commodity.getId());
         BeanUtils.copyProperties(commodityRs,rs);
-        Option query=new Option();
-        query.setCommodityCode(commodityRs.getCommodityCode());
-        QueryWrapper<Option> qw= new QueryWrapper<>(query);
-        rs.setOptions(optionMapper.selectList(qw));
         return rs;
     }
 

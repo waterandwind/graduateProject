@@ -105,7 +105,6 @@ public class MainOrderController {
     public Response getSaleCount(String date) {
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime date1 = LocalDateTime.parse(date+"-01 00:00:00",df);
-//        LocalDateTime date=LocalDateTime.now();
         LocalDateTime   endTime=date1.plusMonths(1);
         List<SaleCountModel> rs= iMainOrderService.getSaleCount(date1,endTime);
         return Response.success("查找完毕", rs);
