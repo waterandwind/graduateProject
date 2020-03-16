@@ -104,7 +104,7 @@ public class UserController {
 
     @PostMapping("updateAccount")
     @ApiOperation(value = "修改后账号")
-    public Response addAccount(User user) {
+    public Response addAccount(@RequestBody User user) {
         boolean rs =iUserService.updateAccount(user);
         if (rs) {
             return Response.success("修改完毕",user);
