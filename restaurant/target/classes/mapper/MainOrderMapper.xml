@@ -24,7 +24,9 @@
         select IFNULL(count(1),0) AS orderNum  from main_order where create_date >#{date1} and  create_date &lt;=#{date2}
     </select>
     <select id="getCommoditySaleMode" parameterType="java.lang.String" resultType="com.restaurant.entity.CommoditySaleMode">
-        select SUM(quantity) AS commodityNum,commodity_name as commodityName,commodity_id as commodityId  from order_list a LEFT JOIN main_order b on a.main_order_code= b.order_code where b.create_date>#{date1} and b.create_date &lt;=#{date2}GROUP BY  commodity_id
+        select SUM(quantity) AS commodityNum,commodity_name as commodityName,commodity_id as commodityId
+        from order_list a LEFT JOIN main_order b on a.main_order_code= b.order_code where b.create_date>#{date1}
+        and b.create_date &lt;=#{date2}GROUP BY  commodity_id
         ORDER BY commodityNum desc LIMIT 0,9
     </select>
 </mapper>
