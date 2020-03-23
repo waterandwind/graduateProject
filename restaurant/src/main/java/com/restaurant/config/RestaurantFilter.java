@@ -54,7 +54,7 @@ public class RestaurantFilter implements Filter {
             /* 自己的代码 */
             url = request.getRequestURL().toString();
         log.error("请求---->>>>>>>>>"+url);
-            if (url.contains("login") || url.contains("swagger") || url.contains("ui") || url.contains("v2")|| url.contains("upload")|| url.contains("imgShow")) {
+            if (url.contains("login") || url.contains("swagger") || url.contains("ui") || url.contains("v2")|| url.contains("upload")|| url.contains("imgShow")|| url.contains("mobile")) {
                 filterChain.doFilter(servletRequest, servletResponse);
             } else {
                 String token = request.getHeader("token");

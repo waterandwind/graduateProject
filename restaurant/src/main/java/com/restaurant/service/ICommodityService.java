@@ -25,4 +25,6 @@ public interface ICommodityService extends IService<Commodity> {
     boolean removeCommodity(List<String> commodityCode) throws Exception;
 
     CommodityCreateDto getCommodity(Commodity commodity);
+
+    List<Commodity> getCommodityList();
 }

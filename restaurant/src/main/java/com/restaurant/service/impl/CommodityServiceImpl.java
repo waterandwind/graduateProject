@@ -87,6 +87,15 @@ public class CommodityServiceImpl extends ServiceImpl<CommodityMapper, Commodity
         return rs;
     }
 
+    @Override
+    public List<Commodity> getCommodityList() {
+        QueryWrapper<Commodity> qw=new QueryWrapper<>();
+        qw.eq("state",1);
+        qw.orderByAsc("type");
+
+        return commodityMapper.selectList(qw);
+    }
+
 //    public List<Commodity> selectCommodityList(CommodityPageDto commodity){
 //       commodityMapper.selectPage()
 //    }

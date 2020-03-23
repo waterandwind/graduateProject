@@ -22,6 +22,6 @@
         sale_cost
     </sql>
     <select id="getTypeList" resultType="java.lang.String">
-        select distinct type from commodity
+        select distinct type from commodity where state = 1 order by  type asc ;
     </select>
 </mapper>
