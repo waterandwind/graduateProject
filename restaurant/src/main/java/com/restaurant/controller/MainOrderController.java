@@ -37,6 +37,7 @@ public class MainOrderController {
     @PostMapping
     @ApiOperation(value = "保存订单")
     public Response createOrder(@RequestBody OrderDetail orderDetail) {
+        orderDetail.setIsRead(1);
         OrderDetail rs = iMainOrderService.createOrder(orderDetail);
         if (rs!=null) {
             return Response.success("保存成功",rs);

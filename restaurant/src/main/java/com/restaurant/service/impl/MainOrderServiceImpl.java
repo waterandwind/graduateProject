@@ -78,7 +78,7 @@ public class MainOrderServiceImpl extends ServiceImpl<MainOrderMapper, MainOrder
         BeanUtils.copyProperties(list, order);
         order.setOrderCode(orderNum);
         order.setTotalPrice(totalPrice);
-        order.setIsRead(1);
+//        order.setIsRead(1);
         save(order);
         QueryWrapper<MainOrder> qw= new QueryWrapper<>(order);
         OrderDetail rsOrder=new OrderDetail();
