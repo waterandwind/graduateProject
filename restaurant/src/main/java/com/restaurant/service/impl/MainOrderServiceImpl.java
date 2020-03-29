@@ -145,4 +145,12 @@ public class MainOrderServiceImpl extends ServiceImpl<MainOrderMapper, MainOrder
         return list;
     }
 
+    @Override
+    public List<MainOrder> getUserOrder(String account) {
+        QueryWrapper<MainOrder> qw=new QueryWrapper<>();
+        qw.eq("creator_account",account);
+        qw.orderByDesc("create_date");
+        return mainOrderMapper.selectList(qw);
+    }
+
 }

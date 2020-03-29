@@ -84,10 +84,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public boolean updateAccount(User user) {
-        if (user.getPassword()!= null&&user.getPassword()==""){
+        if (user.getPassword()!= null&&user.getPassword()!=""){
            user.setPassword(Utils.getMD5(user.getPassword()));
         }
-
+        if (user.getPassword()!=null&&user.getPassword()==""){
+            user.setPassword(null);
+        }
         if (userMapper.updateById(user)>0){
             return true;
         }

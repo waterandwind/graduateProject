@@ -56,4 +56,11 @@ public interface IMainOrderService extends IService<MainOrder> {
      * @return
      */
     public List<TimeOrderCountDto> getTiemOrderCount(LocalDateTime date);
+    /**
+     * 获取用户订单
+     *
+     * @param account
+     * @return
+     */
+    public List<MainOrder> getUserOrder(String account);
 }
