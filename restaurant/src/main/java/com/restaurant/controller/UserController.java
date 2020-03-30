@@ -40,7 +40,7 @@ public class UserController {
     @Autowired
     private StringRedisTemplate redis;
 
-    @PostMapping
+    @PostMapping("saveAccount")
     @ApiOperation(value = "新增账号")
     public Response createUser(@RequestBody User user) {
         if (iUserService.hasExist(user.getAccountCode())) {

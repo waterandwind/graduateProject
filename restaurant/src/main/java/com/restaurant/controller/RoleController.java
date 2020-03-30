@@ -40,7 +40,7 @@ public class RoleController {
     @Autowired
     IRoleRightService iRoleRightService;
 
-    @PostMapping
+    @PostMapping("saveRole")
     @ApiOperation(value = "新建角色")
     public Response createRole(@RequestBody Role role) {
         boolean rs = iRoleService.save(role);
@@ -61,7 +61,7 @@ public class RoleController {
         }
     }
 
-    @GetMapping
+    @GetMapping("getRole")
     @ApiOperation(value = "查询角色详情")
     public Response roleDetail(@Valid Role role) {
         RoleDetail rs = iRoleService.getRoleDetail(role);

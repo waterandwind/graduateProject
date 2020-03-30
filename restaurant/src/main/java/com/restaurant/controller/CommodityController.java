@@ -44,7 +44,7 @@ public class CommodityController {
     ICommodityService iCommodeytService;
 
 
-    @PostMapping
+    @PostMapping("/saveCommodity")
     @ApiOperation(value = "保存商品信息")
     public Response createCommodity(@RequestBody CommodityCreateDto commodity) {
         boolean rs = iCommodeytService.createCommodity(commodity);
@@ -55,7 +55,7 @@ public class CommodityController {
         }
     }
 
-    @PutMapping
+    @PutMapping("/updateCommodity")
     @ApiOperation(value = "修改商品信息")
     public Response updateCommodity(@RequestBody Commodity commodity) {
         boolean rs = iCommodeytService.updateCommodity(commodity);
@@ -112,7 +112,7 @@ public class CommodityController {
         IPage rs = iCommodeytService.page(new Page<Commodity>(commodity.getCurrent(), commodity.getPageSize()), qw);
         return Response.success("查找完毕", rs);
     }
-    @GetMapping
+    @GetMapping("getCommodity")
     @ApiOperation(value = "获取单个商品信息及备注")
     public Response getCommodity(@Valid Commodity commodity) {
 

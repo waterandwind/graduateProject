@@ -34,7 +34,7 @@ public class MainOrderController {
     IMainOrderService iMainOrderService;
 
 
-    @PostMapping
+    @PostMapping("saveOrder")
     @ApiOperation(value = "保存订单")
     public Response createOrder(@RequestBody OrderDetail orderDetail) {
         orderDetail.setIsRead(1);
@@ -73,7 +73,7 @@ public class MainOrderController {
             return Response.bizError("删除出错");
         }
     }
-    @GetMapping
+    @GetMapping("getOrder")
     @ApiOperation(value = "查看订单详情")
     public Response createOrder( MainOrder mainOrder) {
         OrderDetail rs = iMainOrderService.getOrderDetail(mainOrder);
