@@ -60,9 +60,6 @@ public class UserController {
 
         UserDto rs = iUserService.login(user);
         if (rs != null) {
-            String token = Utils.uuidStr();
-            redis.opsForValue().set(token, user.getAccountCode(), 30000, TimeUnit.SECONDS);
-            rs.setToken(token);
             return Response.success("登录成功", rs);
         } else {
             return Response.accountOrPasswordError("账号或者密码错误");

@@ -21,5 +21,6 @@ public interface RoleMapper extends BaseMapper<Role> {
 
     List<Right> getRoleDetail(Role role);
     List<Role> getRoleList(User user);
+    List<String> getRightList(String accout);
 
 }

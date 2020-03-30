@@ -23,8 +23,11 @@ public enum ResponseStatus {
     /**
      * 未查询到数据
      */
-    NOT_FOUND(4);
-
+    NOT_FOUND(4),
+    /**
+     * 权限不足
+     */
+    RIGHT_NOT_ENOUGHT(5);
 
     int code;
 
