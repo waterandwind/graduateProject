@@ -117,7 +117,7 @@ public class MainOrderServiceImpl extends ServiceImpl<MainOrderMapper, MainOrder
         if (list==null ||list.size()==0){
             CommoditySaleMode tem=new CommoditySaleMode();
             tem.setCommodityId(0);
-            tem.setCommodityName("开水白菜");
+            tem.setCommodityName("尚无数据");
             tem.setCommodityNum(0);
             list.add(tem);
         }

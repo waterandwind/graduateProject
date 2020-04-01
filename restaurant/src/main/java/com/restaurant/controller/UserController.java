@@ -72,6 +72,7 @@ public class UserController {
         String rs = redis.opsForValue().get(user.getToken());
         if (rs != null) {
             redis.opsForValue().getOperations().delete(user.getToken());
+            redis.opsForValue().getOperations().delete("r"+rs);
             return Response.success("退出完成");
         } else {
             return Response.bizError("token失效");

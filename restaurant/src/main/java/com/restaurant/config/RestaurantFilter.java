@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import com.alibaba.fastjson.JSON;
-import sun.rmi.runtime.Log;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
