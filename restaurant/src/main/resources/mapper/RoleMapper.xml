@@ -44,15 +44,15 @@
     </select>
     <select id="getRightList" resultType="java.lang.String" parameterType="java.lang.String">
 SELECT DISTINCT
-	e.right_url
+	*
 FROM
-	USER a
-LEFT JOIN user_role b ON a.account_code = b.account_code
-LEFT JOIN role c ON b.role_id = c.id
-LEFT JOIN role_right d ON b.role_id = d.role_id
-LEFT JOIN right_table e ON d.right_id = e.id
+	right_table e
+LEFT JOIN role_right d on d.right_id = e.id
+LEFT JOIN role c on c.id= d.role_id
+LEFT JOIN user_role  b on b.role_id = c.id
+LEFT JOIN `user` a on a.account_code = b.account_code
 WHERE
 	c.`status` = 1
-AND a.account_code = #{account}
+AND a.account_code = #{accout}
     </select>
 </mapper>
