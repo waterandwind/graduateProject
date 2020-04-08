@@ -44,7 +44,7 @@
     </select>
     <select id="getRightList" resultType="java.lang.String" parameterType="java.lang.String">
 SELECT DISTINCT
-	*
+	e.right_url
 FROM
 	right_table e
 LEFT JOIN role_right d on d.right_id = e.id

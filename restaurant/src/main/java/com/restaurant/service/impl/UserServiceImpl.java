@@ -65,6 +65,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             User item= new User();
             item.setName("未知用户");
             String code=redis.opsForValue().increment("accountCode").toString();
+            code= "000000"+code;
+            code=code.substring(code.length()-7,code.length());
             //账号存在则让循环多执行一次，保证生成账号数量正确
             if (hasExist(code)){
                 i--;
